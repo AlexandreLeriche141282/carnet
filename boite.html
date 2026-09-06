@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Boîte mail labo — Carnet</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="demo">
+  <a class="demo-back" href="test.html">← Test procédure</a>
+  <div class="phone">
+    <header>
+      <p class="eyebrow">Gmail · leroy@boulangerie.fr</p>
+      <h1>Boîte de réception</h1>
+      <p class="sub">Démo locale : aucun vrai mail n’est envoyé. C’est ce que le boulanger verrait.</p>
+    </header>
+    <main class="mail-main">
+      <div class="links" style="margin-top:0">
+        <button class="ghost" id="recap" type="button">Simuler le mail de 18h</button>
+      </div>
+      <div id="empty" class="note hidden">Aucun mail. Passez une commande côté client, ou simulez le récap de 18h.</div>
+      <div class="mail-list" id="list"></div>
+      <div class="links">
+        <a href="commande.html">← Passer une commande (QR)</a>
+        <a href="labo.html">Ouvrir le labo</a>
+      </div>
+    </main>
+  </div>
+
+  <div id="reader" class="mail-reader hidden">
+    <div class="phone">
+      <header>
+        <button class="chip" id="close" type="button">← Boîte</button>
+        <p class="eyebrow" id="meta"></p>
+        <h1 id="subject"></h1>
+        <p class="sub" id="from"></p>
+      </header>
+      <main>
+        <pre class="mail-body" id="body"></pre>
+        <div class="links">
+          <a href="labo.html">Ouvrir la page labo →</a>
+        </div>
+      </main>
+    </div>
+  </div>
+  <script src="data.js"></script>
+  <script src="boite.js"></script>
+</body>
+</html>

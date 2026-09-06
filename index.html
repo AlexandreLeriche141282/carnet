@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Carnet — Le cahier de commandes des artisans</title>
+  <meta name="description" content="QR au comptoir, commandes à date, liste pour le labo le matin. Pour boulangers, pâtissiers, chocolatiers, traiteurs et fleuristes. Sans site internet, sans application.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=3">
+</head>
+<body class="site">
+  <section class="stage">
+    <img class="stage-photo" src="assets/hero-bakery.jpg" alt="Comptoir de boulangerie artisanale">
+    <div class="stage-veil"></div>
+    <div class="wrap">
+      <header class="top top-light">
+        <a class="brand" href="index.html">Carnet</a>
+        <nav class="nav">
+          <a class="hide-s" href="#fonctionnement">Fonctionnement</a>
+          <a class="hide-s" href="#metiers">Métiers</a>
+          <a class="hide-s" href="#tarifs">Tarifs</a>
+          <a href="test.html">Tester la procédure</a>
+          <a class="btn btn-fill" href="#contact">Être rappelé</a>
+        </nav>
+      </header>
+
+      <div class="hero">
+        <div>
+          <p class="kicker">Commandes de fêtes · retrait boutique</p>
+          <h1>Le cahier de commandes,<br>enfin lisible.</h1>
+          <p class="lead">Un QR au comptoir. Le client choisit. Vous avez les totaux pour le labo le matin. Pas de site. Pas d’appli. L’acompte, seulement si vous le voulez.</p>
+          <div class="cta-row">
+            <a class="btn btn-fill" href="test.html">Tester la procédure</a>
+            <a class="btn btn-ghost" href="commande.html">Voir comme le client</a>
+          </div>
+        </div>
+        <div class="device-wrap">
+          <div class="device">
+            <iframe src="commande.html" title="Démo de commande client" loading="lazy"></iframe>
+          </div>
+          <p class="device-caption">Démo cliquable · rien n’est débité</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="strip">
+    <img src="assets/viennoiserie.jpg" alt="Croissants">
+    <img src="assets/gateau.jpg" alt="Gâteau commandé à la date">
+    <img src="assets/fleuriste.jpg" alt="Bouquet de fleuriste">
+  </div>
+
+  <div class="wrap">
+    <section class="block" id="fonctionnement">
+      <h2>Trois gestes, pas un logiciel</h2>
+      <p class="intro">Ce n’est pas un click &amp; collect, ni une caisse. C’est le cahier des commandes à date, en propre.</p>
+      <div class="grid-3">
+        <article class="card">
+          <span class="num">1</span>
+          <h3>QR au comptoir</h3>
+          <p>Un lien à vous, du type carnet.fr/leroy. Le client commande au téléphone. La vendeuse peut taper la même chose pour ceux qui passent sans scanner.</p>
+        </article>
+        <article class="card">
+          <span class="num">2</span>
+          <h3>Liste du matin</h3>
+          <p>Le chef ouvre une page : totaux à produire, noms pour le comptoir. Il imprime, ou il garde le téléphone. Un récap la veille, si vous voulez.</p>
+        </article>
+        <article class="card">
+          <span class="num">3</span>
+          <h3>Retrait en boutique</h3>
+          <p>On coche « récupéré ». Les no-shows restent visibles. L’acompte est optionnel : utile le 6 janvier, inutile pour Madame Durand tous les dimanches.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="block" id="metiers">
+      <h2>Fait pour le fournil. Utile ailleurs.</h2>
+      <p class="intro">Là où il y a une commande à date, un retrait, et le risque d’en faire trop — ou pas assez.</p>
+      <div class="grid-2">
+        <article class="shot">
+          <img src="assets/hero-bakery.jpg" alt="Rayon pain d’une boulangerie">
+          <div>
+            <h3>D’abord le métier de bouche</h3>
+            <p>Boulangers, pâtissiers, chocolatiers, salons de thé, traiteurs. Galettes, bûches, Pâques, pièces montées, plateaux.</p>
+            <div class="who">
+              <span class="tag is-main">Boulangerie</span>
+              <span class="tag is-main">Pâtisserie</span>
+              <span class="tag">Chocolaterie</span>
+              <span class="tag">Traiteur</span>
+            </div>
+          </div>
+        </article>
+        <article class="shot">
+          <img src="assets/fleuriste.jpg" alt="Bouquet artisanal">
+          <div>
+            <h3>Le même carnet, un autre catalogue</h3>
+            <p>Fleuristes, glaciers, rôtisseurs. Pas le plombier, pas le coiffeur : ce n’est pas un agenda de rendez-vous.</p>
+            <div class="who">
+              <span class="tag">Fleuriste</span>
+              <span class="tag">Glacier</span>
+              <span class="tag">Rôtisseur</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="block" id="tarifs">
+      <h2>Vous ne payez pas 12 mois pour 3 semaines de galettes</h2>
+      <p class="intro">La saison d’abord. L’année, si les gâteaux d’anniversaire tournent aussi.</p>
+      <div class="grid-3">
+        <article class="card plan is-hot">
+          <p class="plan-flag">Le plus choisi</p>
+          <h3>Saison</h3>
+          <p class="amount">49&nbsp;€ <span>/ mois</span></p>
+          <p>3 mois. Bûches, galettes ou Pâques. C’est ce que la plupart signeront en premier.</p>
+        </article>
+        <article class="card plan">
+          <h3>Année</h3>
+          <p class="amount">39&nbsp;€ <span>/ mois</span></p>
+          <p>Si le carnet sert aussi hors fêtes. Ou 399&nbsp;€ réglés une fois.</p>
+        </article>
+        <article class="card plan">
+          <h3>Forfait fêtes</h3>
+          <p class="amount">149&nbsp;€ <span>/ pic</span></p>
+          <p>Une saison, sans abonnement. Pour tester sans s’engager.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="block faq">
+      <h2>Questions de patron</h2>
+      <details open>
+        <summary>Il faut un site internet&nbsp;?</summary>
+        <p>Non. On héberge la page de commande. Vous avez un QR. Plus tard, si vous voulez un vrai site, on branche la même page dessus.</p>
+      </details>
+      <details>
+        <summary>Il faut une application&nbsp;?</summary>
+        <p>Non. Le client scanne, ça s’ouvre dans le téléphone. Vous, un favori pour le labo. C’est tout.</p>
+      </details>
+      <details>
+        <summary>L’acompte est obligatoire&nbsp;?</summary>
+        <p>Non. On l’active quand ça pique (gros montant, week-end de pic). On le laisse fermé si vos habitués viennent toujours.</p>
+      </details>
+      <details>
+        <summary>Je dois gérer un back-office&nbsp;?</summary>
+        <p>Non. Le catalogue, on le saisit avec vous à l’install. Un nouveau parfum&nbsp;? Un message.</p>
+      </details>
+    </section>
+  </div>
+
+  <section class="band" id="contact">
+    <div class="wrap">
+      <h2>Un pilote, pas une usine</h2>
+      <p>On branche ça chez un artisan, une saison. Si le chef imprime sa liste tout seul, on continue.</p>
+      <div class="contact-box">
+        <a class="btn btn-fill" href="mailto:alexandre@pikcel.fr?subject=Carnet%20%E2%80%94%20pilote">alexandre@pikcel.fr</a>
+        <a class="btn btn-ghost" href="tel:+33610601442">06 10 60 14 42</a>
+        <span>Hauts-de-France · soirs et samedi</span>
+      </div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <div class="wrap foot-in">
+      <span>Carnet — un outil Pikcel</span>
+      <span>Démo · rien n’est débité</span>
+    </div>
+  </footer>
+</body>
+</html>

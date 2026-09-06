@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>QR comptoir — Boulangerie Leroy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="site test-page">
+  <div class="wrap">
+    <header class="top">
+      <a class="brand" href="index.html">Carnet</a>
+      <nav class="nav">
+        <a href="test.html">Procédure</a>
+        <a href="commande.html">Page client</a>
+      </nav>
+    </header>
+    <div class="poster">
+      <p class="kicker" style="color:#9a3f1e">À coller au comptoir</p>
+      <h1>Boulangerie Leroy</h1>
+      <p class="sub" style="margin-bottom:0">Scannez pour commander votre galette</p>
+      <img id="qr" alt="QR code de commande">
+      <p>Commande · acompte · retrait en boutique</p>
+      <code id="url"></code>
+    </div>
+  </div>
+  <script>
+    const url = new URL("commande.html", window.location.href).href;
+    document.getElementById("url").textContent = url;
+    document.getElementById("qr").src =
+      "https://api.qrserver.com/v1/create-qr-code/?size=320x320&margin=8&data=" +
+      encodeURIComponent(url);
+  </script>
+</body>
+</html>

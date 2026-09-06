@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Démo client — Carnet</title>
+  <meta name="description" content="Démo : ce que le client voit en scannant le QR de la boulangerie.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="demo">
+  <a class="demo-back" href="test.html">← Test procédure · client</a>
+  <div class="phone">
+    <div id="form-view">
+      <header>
+        <p class="eyebrow">QR scanné · Croix</p>
+        <h1>Boulangerie Leroy</h1>
+        <p class="sub">Commande galettes · acompte 50&nbsp;% · retrait en boutique</p>
+      </header>
+
+      <main>
+        <section>
+          <h2>La galette</h2>
+          <div class="choices" id="sizes"></div>
+        </section>
+
+        <section>
+          <h2>Parfum</h2>
+          <div class="chips" id="flavors"></div>
+        </section>
+
+        <section>
+          <h2>Retrait</h2>
+          <div class="chips" id="days"></div>
+        </section>
+
+        <section>
+          <h2>Vos coordonnées</h2>
+          <div class="row">
+            <div>
+              <label for="name">Nom</label>
+              <input id="name" autocomplete="name" placeholder="Durand">
+            </div>
+            <div>
+              <label for="phone">Téléphone</label>
+              <input id="phone" type="tel" inputmode="tel" placeholder="06 12 34 56 78">
+            </div>
+          </div>
+          <p class="note">Le solde se paie en caisse au retrait. Si vous ne venez pas, l’acompte est conservé. (Démo : l’acompte peut être désactivé.)</p>
+        </section>
+      </main>
+
+      <div class="bar">
+        <button class="pay" id="pay" type="button">
+          Payer l’acompte · <span id="deposit">14&nbsp;€</span>
+          <small>Solde en boutique · <span id="balance">14&nbsp;€</span></small>
+        </button>
+      </div>
+    </div>
+
+    <div id="ok-view" class="ok hidden">
+      <div class="ok-badge">✓</div>
+      <p class="eyebrow">Commande enregistrée</p>
+      <h1>Merci, c’est noté</h1>
+      <p class="sub">Un mail vient d’arriver dans la boîte du labo. Démo : rien n’est débité.</p>
+      <div class="ticket" id="ticket"></div>
+      <div class="links">
+        <a href="boite.html">Ouvrir le mail du boulanger →</a>
+        <a href="labo.html">Voir la page labo</a>
+        <button class="ghost" id="again" type="button">Commander une autre galette</button>
+      </div>
+    </div>
+  </div>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

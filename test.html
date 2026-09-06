@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Test local — procédure Carnet</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="site test-page">
+  <div class="wrap">
+    <header class="top">
+      <a class="brand" href="index.html">Carnet</a>
+      <nav class="nav">
+        <a href="index.html">Site</a>
+        <button class="btn btn-ghost" id="reset" type="button">Recommencer à zéro</button>
+      </nav>
+    </header>
+
+    <section class="block" style="padding-top:24px">
+      <p class="kicker" style="color:#9a3f1e">Test · mail simulé · rien n’est débité</p>
+      <h2>Toute la procédure, dans l’ordre</h2>
+      <p class="intro">Quatre écrans, comme en boutique. Pour le QR, utilisez la page ci-dessous une fois le site en ligne : le téléphone n’ouvre pas localhost. Commande, mail et labo doivent rester <strong>sur le même téléphone</strong> (même navigateur).</p>
+      <p style="margin:0 0 22px"><a class="btn btn-fill" href="qr.html">Afficher le QR à flasher</a></p>
+
+      <div class="grid-2">
+        <article class="card">
+          <span class="num">1</span>
+          <h3>Le client scanne le QR</h3>
+          <p>Choisissez une galette, un nom, payez l’acompte (simulé).</p>
+          <p style="margin-top:14px"><a class="btn btn-fill" href="commande.html">Ouvrir la page client</a></p>
+        </article>
+        <article class="card">
+          <span class="num">2</span>
+          <h3>Le boulanger reçoit le mail</h3>
+          <p>Après la commande, ouvrez la boîte. Puis cliquez « Simuler le mail de 18h » : c’est le récap du soir, le vrai filet.</p>
+          <p style="margin-top:14px"><a class="btn btn-fill" href="boite.html">Ouvrir la boîte mail</a></p>
+        </article>
+        <article class="card">
+          <span class="num">3</span>
+          <h3>Le labo le lendemain</h3>
+          <p>Depuis le mail, ou ici : totaux à produire, liste comptoir.</p>
+          <p style="margin-top:14px"><a class="btn btn-fill" href="labo.html">Ouvrir le labo</a></p>
+        </article>
+        <article class="card">
+          <span class="num">4</span>
+          <h3>Le client vient chercher</h3>
+          <p>Au comptoir, « Marquer récupéré ». S’il ne vient pas, l’acompte reste.</p>
+          <p style="margin-top:14px"><a class="btn btn-ghost" href="labo.html" style="color:#1c1410;background:#fff;border-color:#e4d5c4">Aller cocher un retrait</a></p>
+        </article>
+      </div>
+    </section>
+  </div>
+  <script src="data.js"></script>
+  <script>
+    document.getElementById("reset").addEventListener("click", () => {
+      resetDemo();
+      alert("Démo remise à zéro. Les 4 commandes d’exemple sont de retour, la boîte mail est vide.");
+    });
+  </script>
+</body>
+</html>
