@@ -2,7 +2,7 @@ function render() {
   const orders = loadOrders().filter((o) => o.day === LAB_DAY);
   const counts = {};
   for (const o of orders) {
-    const key = `${o.flavor} · ${o.size} parts`;
+    const key = orderLabel(o);
     counts[key] = (counts[key] || 0) + 1;
   }
 
@@ -11,7 +11,7 @@ function render() {
     .join("");
 
   document.getElementById("totals").innerHTML = `
-    <div><span>Total galettes</span><strong>${orders.length}</strong></div>
+    <div><span>Total à produire</span><strong>${orders.length}</strong></div>
     ${rows}
   `;
 
@@ -23,7 +23,7 @@ function render() {
             <h3>${o.name}</h3>
             <span>${euro(o.price / 2)} solde</span>
           </header>
-          <p>${o.size} parts · ${o.flavor}<br>${o.phone}</p>
+          <p>${orderLabel(o)}${o.composition ? `<br>${o.composition}` : ""}<br>${o.phone}</p>
           <button class="done" type="button" data-id="${o.id}">${o.done ? "Récupéré" : "Marquer récupéré"}</button>
         </article>`
     )

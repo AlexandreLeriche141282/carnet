@@ -1,20 +1,44 @@
-const sizes = [
-  { id: "6", label: "6 parts", detail: "pour 4 à 6 personnes", price: 22 },
-  { id: "8", label: "8 parts", detail: "pour 6 à 8 personnes", price: 28 },
-  { id: "10", label: "10 parts", detail: "pour 8 à 10 personnes", price: 34 },
-];
+const days = ["Samedi", "Dimanche", "Lundi"];
+const state = { productId: "buche", size: "6", flavor: "marron-poire", day: days[1] };
 
-const flavors = ["Frangipane", "Pomme", "Chocolat"];
-const days = ["Samedi 10 janv.", "Dimanche 11 janv.", "Lundi 12 janv."];
+function currentProduct() {
+  return catalog.find((p) => p.id === state.productId) || catalog[0];
+}
 
-const state = { size: "8", flavor: "Frangipane", day: days[1] };
+function currentFlavor() {
+  return findFlavor(currentProduct(), state.flavor);
+}
 
 function currentPrice() {
-  return sizes.find((s) => s.id === state.size).price;
+  const size = currentProduct().sizes.find((s) => s.id === state.size);
+  return (size || currentProduct().sizes[0]).price;
+}
+
+function syncVariants() {
+  const p = currentProduct();
+  if (!p.sizes.some((s) => s.id === state.size)) state.size = p.sizes[0].id;
+  if (!findFlavor(p, state.flavor) || !p.flavors.some((f) => flavorId(f) === state.flavor || flavorName(f) === state.flavor)) {
+    state.flavor = flavorId(p.flavors[0]);
+  } else {
+    state.flavor = flavorId(findFlavor(p, state.flavor));
+  }
 }
 
 function renderChoices() {
-  document.getElementById("sizes").innerHTML = sizes
+  syncVariants();
+  const p = currentProduct();
+
+  document.getElementById("products").innerHTML = catalog
+    .map(
+      (item) => `
+      <button class="choice choice-photo ${state.productId === item.id ? "is-on" : ""}" data-product="${item.id}" type="button">
+        <img src="${item.photo}" alt="">
+        <span><strong>${item.name}</strong><span>${item.detail}</span></span>
+      </button>`
+    )
+    .join("");
+
+  document.getElementById("sizes").innerHTML = p.sizes
     .map(
       (s) => `
       <button class="choice ${state.size === s.id ? "is-on" : ""}" data-size="${s.id}" type="button">
@@ -24,10 +48,22 @@ function renderChoices() {
     )
     .join("");
 
-  document.getElementById("flavors").innerHTML = flavors
-    .map(
-      (f) => `<button class="chip ${state.flavor === f ? "is-on" : ""}" data-flavor="${f}" type="button">${f}</button>`
-    )
+  document.getElementById("flavors").innerHTML = p.flavors
+    .map((f) => {
+      const on = flavorId(f) === state.flavor;
+      const layers = flavorLayers(f)
+        .map((layer) => `<li>${layer}</li>`)
+        .join("");
+      const photo = flavorPhoto(f, p);
+      return `
+      <button class="flavor-card ${on ? "is-on" : ""}" data-flavor="${flavorId(f)}" type="button">
+        <img src="${photo}" alt="${flavorName(f)}">
+        <span>
+          <strong>${flavorName(f)}</strong>
+          <ul>${layers}</ul>
+        </span>
+      </button>`;
+    })
     .join("");
 
   document.getElementById("days").innerHTML = days
@@ -46,11 +82,18 @@ function showOk(order) {
   document.getElementById("ok-view").classList.remove("hidden");
   document.getElementById("ticket").innerHTML = `
     <p><strong>${order.name}</strong></p>
-    <p>Galette ${order.size} parts · ${order.flavor}</p>
+    <p>${orderLabel(order)}</p>
     <p>Retrait ${order.day}</p>
     <p>Acompte payé ${euro(order.price / 2)} · solde ${euro(order.price / 2)} en boutique</p>
   `;
 }
+
+document.getElementById("products").addEventListener("click", (e) => {
+  const btn = e.target.closest("[data-product]");
+  if (!btn) return;
+  state.productId = btn.dataset.product;
+  renderChoices();
+});
 
 document.getElementById("sizes").addEventListener("click", (e) => {
   const btn = e.target.closest("[data-size]");
@@ -76,12 +119,16 @@ document.getElementById("days").addEventListener("click", (e) => {
 document.getElementById("pay").addEventListener("click", () => {
   const name = document.getElementById("name").value.trim() || "Client démo";
   const phone = document.getElementById("phone").value.trim() || "06 00 00 00 00";
+  const p = currentProduct();
+  const flavor = currentFlavor();
   const order = {
     id: String(Date.now()),
     name,
     phone,
+    product: p.name,
     size: state.size,
-    flavor: state.flavor,
+    flavor: flavorName(flavor),
+    composition: flavorLayers(flavor).join(" · "),
     day: state.day,
     price: currentPrice(),
     done: false,

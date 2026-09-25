@@ -3,32 +3,54 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Démo client — Carnet</title>
+  <title>Démo client — Carnet de commandes</title>
   <meta name="description" content="Démo : ce que le client voit en scannant le QR de la boulangerie.">
+  <script>if (window.self !== window.top) document.documentElement.classList.add("in-frame");</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=13">
 </head>
 <body class="demo">
-  <a class="demo-back" href="test.html">← Test procédure · client</a>
+  <header class="mast">
+    <div class="wrap mast-in">
+      <a class="brand" href="index.html">
+        <img class="brand-logo" src="assets/logo-carnet.svg" alt="">
+        Carnet
+      </a>
+      <nav class="nav">
+        <a class="hide-s" href="index.html">Accueil</a>
+        <a href="labo.html">Ce que voit le labo</a>
+        <a class="btn btn-fill" href="index.html#contact">Être rappelé</a>
+      </nav>
+    </div>
+  </header>
+
   <div class="phone">
     <div id="form-view">
-      <header>
-        <p class="eyebrow">QR scanné · Croix</p>
-        <h1>Boulangerie Leroy</h1>
-        <p class="sub">Commande galettes · acompte 50&nbsp;% · retrait en boutique</p>
+      <header class="shop-head is-seal">
+        <img class="shop-logo shop-logo-seal" src="assets/logo-leonardd.png?v=2" alt="Léonard Boulangerie">
+        <div>
+          <p class="eyebrow">Commande en boutique</p>
+          <h1 class="sr-only">Léonard Boulangerie</h1>
+          <p class="sub">Acompte 50&nbsp;% · retrait au comptoir</p>
+        </div>
       </header>
 
       <main>
         <section>
-          <h2>La galette</h2>
+          <h2>Le produit</h2>
+          <div class="choices" id="products"></div>
+        </section>
+
+        <section>
+          <h2>Taille</h2>
           <div class="choices" id="sizes"></div>
         </section>
 
         <section>
-          <h2>Parfum</h2>
-          <div class="chips" id="flavors"></div>
+          <h2>Le parfum</h2>
+          <div class="flavor-list" id="flavors"></div>
         </section>
 
         <section>
@@ -69,7 +91,7 @@
       <div class="links">
         <a href="boite.html">Ouvrir le mail du boulanger →</a>
         <a href="labo.html">Voir la page labo</a>
-        <button class="ghost" id="again" type="button">Commander une autre galette</button>
+        <button class="ghost" id="again" type="button">Commander autre chose</button>
       </div>
     </div>
   </div>
