@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=13">
+  <link rel="stylesheet" href="styles.css?v=29">
 </head>
 <body class="demo">
   <header class="mast">
@@ -18,10 +18,39 @@
         <img class="brand-logo" src="assets/logo-carnet.svg" alt="">
         Carnet
       </a>
-      <nav class="nav">
-        <a class="hide-s" href="index.html">Accueil</a>
-        <a href="labo.html">Ce que voit le labo</a>
-        <a class="btn btn-fill" href="index.html#contact">Être rappelé</a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Ouvrir le menu">
+        <span></span>
+      </button>
+      <nav class="nav" id="site-nav">
+        <div class="nav-panel">
+          <div class="nav-links">
+            <a href="index.html">Accueil</a>
+            <a href="labo.html">Ce que voit le labo</a>
+          </div>
+          <div class="nav-extra">
+            <p class="nav-pitch">Moins d’appels pendant le service.<br>Le soir, le labo a les totaux — pas le cahier illisible.</p>
+            <ul class="nav-points">
+              <li>Sans site</li>
+              <li>Sans appli</li>
+              <li>Mail du labo</li>
+            </ul>
+            <p class="nav-kicker">La démo, en 2 minutes</p>
+            <div class="nav-cards">
+              <a class="nav-card" href="commande.html">
+                <span>Côté boutique</span>
+                <strong>Ce que voit le client</strong>
+              </a>
+              <a class="nav-card" href="labo.html">
+                <span>Côté fournil</span>
+                <strong>Ce que voit le labo</strong>
+              </a>
+            </div>
+            <div class="nav-foot">
+              <a href="tel:+33610601442">06 10 60 14 42</a>
+              <a href="mailto:alexandre@pikcel.fr">alexandre@pikcel.fr</a>
+            </div>
+          </div>
+        </div>
       </nav>
     </div>
   </header>
@@ -29,11 +58,15 @@
   <div class="phone">
     <div id="form-view">
       <header class="shop-head is-seal">
+        <button class="cart-btn" data-open-cart type="button" aria-label="Ouvrir le panier">
+          Panier
+          <span class="cart-count" data-cart-count hidden>0</span>
+        </button>
         <img class="shop-logo shop-logo-seal" src="assets/logo-leonardd.png?v=2" alt="Léonard Boulangerie">
         <div>
           <p class="eyebrow">Commande en boutique</p>
           <h1 class="sr-only">Léonard Boulangerie</h1>
-          <p class="sub">Acompte 50&nbsp;% · retrait au comptoir</p>
+          <p class="sub">Ajoutez vos produits.<br>Vous validez dans le panier.</p>
         </div>
       </header>
 
@@ -52,32 +85,76 @@
           <h2>Le parfum</h2>
           <div class="flavor-list" id="flavors"></div>
         </section>
-
-        <section>
-          <h2>Retrait</h2>
-          <div class="chips" id="days"></div>
-        </section>
-
-        <section>
-          <h2>Vos coordonnées</h2>
-          <div class="row">
-            <div>
-              <label for="name">Nom</label>
-              <input id="name" autocomplete="name" placeholder="Durand">
-            </div>
-            <div>
-              <label for="phone">Téléphone</label>
-              <input id="phone" type="tel" inputmode="tel" placeholder="06 12 34 56 78">
-            </div>
-          </div>
-          <p class="note">Le solde se paie en caisse au retrait. Si vous ne venez pas, l’acompte est conservé. (Démo : l’acompte peut être désactivé.)</p>
-        </section>
       </main>
 
       <div class="bar">
-        <button class="pay" id="pay" type="button">
-          Payer l’acompte · <span id="deposit">14&nbsp;€</span>
-          <small>Solde en boutique · <span id="balance">14&nbsp;€</span></small>
+        <button class="cart-peek" id="cart-peek" data-open-cart type="button" hidden></button>
+        <button class="pay" id="add" type="button">
+          Ajouter au panier · <span id="total">18&nbsp;€</span>
+          <small>Vous pourrez en prendre d’autres</small>
+        </button>
+      </div>
+    </div>
+
+    <div id="cart-view" class="hidden">
+      <header class="shop-head">
+        <img class="shop-logo shop-logo-seal" src="assets/logo-leonardd.png?v=2" alt="Léonard Boulangerie">
+        <div>
+          <p class="eyebrow">Votre panier</p>
+          <h1>Valider la commande</h1>
+          <p class="sub">Date, heure, nom et téléphone.</p>
+        </div>
+      </header>
+
+      <main>
+        <p class="cart-empty" id="cart-empty" hidden>Votre panier est vide.<br>Ajoutez un produit pour commander.</p>
+        <div class="cart-lines" id="cart-lines"></div>
+
+        <form id="cart-form" novalidate>
+          <div id="cart-fields">
+            <section>
+              <h2>Retrait</h2>
+              <p class="field-hint">Un seul créneau pour toute la commande.</p>
+              <div class="row">
+                <div>
+                  <label for="pickup-date">Jour</label>
+                  <input id="pickup-date" name="pickup-date" type="date" required>
+                  <p class="field-error" id="pickup-date-error" role="alert"></p>
+                </div>
+                <div>
+                  <label for="pickup-time">Heure</label>
+                  <select id="pickup-time" name="pickup-time" required></select>
+                  <p class="field-error" id="pickup-time-error" role="alert"></p>
+                </div>
+              </div>
+            </section>
+
+            <section>
+              <h2>Vos coordonnées</h2>
+              <p class="field-hint">Obligatoires, pour vous prévenir au retrait.</p>
+              <div class="row">
+                <div>
+                  <label for="name">Nom</label>
+                  <input id="name" name="name" autocomplete="name" placeholder="Durand" required minlength="2">
+                  <p class="field-error" id="name-error" role="alert"></p>
+                </div>
+                <div>
+                  <label for="phone">Téléphone</label>
+                  <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="06 12 34 56 78" required>
+                  <p class="field-error" id="phone-error" role="alert"></p>
+                </div>
+              </div>
+              <p class="note">Le paiement se fait en caisse, au retrait.</p>
+            </section>
+          </div>
+        </form>
+      </main>
+
+      <div class="bar">
+        <button class="ghost" id="back-catalog" type="button">Continuer les produits</button>
+        <button class="pay" id="pay" type="submit" form="cart-form">
+          Valider la commande
+          <small>Paiement au retrait</small>
         </button>
       </div>
     </div>
@@ -86,16 +163,17 @@
       <div class="ok-badge">✓</div>
       <p class="eyebrow">Commande enregistrée</p>
       <h1>Merci, c’est noté</h1>
-      <p class="sub">Un mail vient d’arriver dans la boîte du labo. Démo : rien n’est débité.</p>
+      <p class="sub">Un mail vient d’arriver dans la boîte du labo.<br>Démo : rien n’est débité.</p>
       <div class="ticket" id="ticket"></div>
       <div class="links">
         <a href="boite.html">Ouvrir le mail du boulanger →</a>
         <a href="labo.html">Voir la page labo</a>
-        <button class="ghost" id="again" type="button">Commander autre chose</button>
+        <button class="ghost" id="again" type="button">Nouvelle commande</button>
       </div>
     </div>
   </div>
   <script src="data.js"></script>
   <script src="app.js"></script>
+  <script src="nav.js"></script>
 </body>
 </html>

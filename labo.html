@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=11">
+  <link rel="stylesheet" href="styles.css?v=30">
 </head>
 <body class="demo">
   <header class="mast">
@@ -16,10 +16,39 @@
         <img class="brand-logo" src="assets/logo-carnet.svg" alt="">
         Carnet
       </a>
-      <nav class="nav">
-        <a class="hide-s" href="index.html">Accueil</a>
-        <a href="commande.html">Ce que voit le client</a>
-        <a class="btn btn-fill" href="index.html#contact">Être rappelé</a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Ouvrir le menu">
+        <span></span>
+      </button>
+      <nav class="nav" id="site-nav">
+        <div class="nav-panel">
+          <div class="nav-links">
+            <a href="index.html">Accueil</a>
+            <a href="commande.html">Ce que voit le client</a>
+          </div>
+          <div class="nav-extra">
+            <p class="nav-pitch">Moins d’appels pendant le service.<br>Le soir, le labo a les totaux — pas le cahier illisible.</p>
+            <ul class="nav-points">
+              <li>Sans site</li>
+              <li>Sans appli</li>
+              <li>Mail du labo</li>
+            </ul>
+            <p class="nav-kicker">La démo, en 2 minutes</p>
+            <div class="nav-cards">
+              <a class="nav-card" href="commande.html">
+                <span>Côté boutique</span>
+                <strong>Ce que voit le client</strong>
+              </a>
+              <a class="nav-card" href="labo.html">
+                <span>Côté fournil</span>
+                <strong>Ce que voit le labo</strong>
+              </a>
+            </div>
+            <div class="nav-foot">
+              <a href="tel:+33610601442">06 10 60 14 42</a>
+              <a href="mailto:alexandre@pikcel.fr">alexandre@pikcel.fr</a>
+            </div>
+          </div>
+        </div>
       </nav>
     </div>
   </header>
@@ -29,12 +58,18 @@
       <img class="shop-logo shop-logo-seal" src="assets/logo-leonardd.png?v=2" alt="Léonard Boulangerie">
       <div>
         <p class="eyebrow">Page labo · démo</p>
-        <h1>Aujourd’hui</h1>
-        <p class="sub" id="when">Dimanche · Léonard</p>
+        <h1 id="lab-title">Feuille du jour</h1>
+        <p class="sub" id="when">Léonard</p>
       </div>
     </header>
 
     <main>
+      <section>
+        <h2>Le jour</h2>
+        <label class="sr-only" for="lab-date">Jour de production</label>
+        <input id="lab-date" type="date">
+      </section>
+
       <section>
         <h2>À produire</h2>
         <div class="totals" id="totals"></div>
@@ -45,7 +80,7 @@
         <div class="list" id="list"></div>
       </section>
 
-      <p class="note">Le chef imprime cette feuille le matin. La vendeuse coche « Récupéré » au retrait. Les commandes passées sur la page QR apparaissent ici.</p>
+      <p class="note">Le chef imprime cette feuille le matin.<br>La vendeuse coche « Récupéré » au retrait.<br>Le chef peut supprimer une commande, si besoin.<br>Les commandes passées sur la page QR apparaissent ici.</p>
       <div class="links">
         <button class="ghost" type="button" onclick="window.print()">Imprimer</button>
         <a href="boite.html">← Boîte mail</a>
@@ -53,7 +88,8 @@
       </div>
     </main>
   </div>
-  <script src="data.js"></script>
-  <script src="labo.js"></script>
+  <script src="data.js?v=5"></script>
+  <script src="labo.js?v=30"></script>
+  <script src="nav.js"></script>
 </body>
 </html>

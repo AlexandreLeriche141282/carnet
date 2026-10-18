@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Carnet de commandes — Le cahier des boulangers-pâtissiers</title>
-  <meta name="description" content="Un QR au comptoir, le client commande dans votre catalogue, le labo reçoit la liste le soir. Sans site, sans appli, sans caisse.">
+  <meta name="description" content="Le cahier de commandes de la boutique, lisible pour le labo. Moins d’appels pendant le service, moins d’erreurs de transmission. Sans site, sans appli, sans caisse.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=11">
+  <link rel="stylesheet" href="styles.css?v=29">
 </head>
 <body class="site">
   <header class="mast">
@@ -17,12 +17,41 @@
         <img class="brand-logo" src="assets/logo-carnet.svg" alt="">
         Carnet
       </a>
-      <nav class="nav">
-        <a class="hide-s" href="#quoi">C’est quoi</a>
-        <a class="hide-s" href="#marche">Comment ça marche</a>
-        <a class="hide-s" href="#essai">Essayer</a>
-        <a class="hide-s" href="#tarifs">Tarifs</a>
-        <a class="btn btn-fill" href="#contact">Être rappelé</a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Ouvrir le menu">
+        <span></span>
+      </button>
+      <nav class="nav" id="site-nav">
+        <div class="nav-panel">
+          <div class="nav-links">
+            <a href="#quoi">C’est quoi</a>
+            <a href="#marche">Comment ça marche</a>
+            <a href="#essai">Essayer</a>
+            <a href="#tarifs">Tarifs</a>
+          </div>
+          <div class="nav-extra">
+            <p class="nav-pitch">Moins d’appels pendant le service.<br>Le soir, le labo a les totaux — pas le cahier illisible.</p>
+            <ul class="nav-points">
+              <li>Sans site</li>
+              <li>Sans appli</li>
+              <li>Mail du labo</li>
+            </ul>
+            <p class="nav-kicker">La démo, en 2 minutes</p>
+            <div class="nav-cards">
+              <a class="nav-card" href="commande.html">
+                <span>Côté boutique</span>
+                <strong>Ce que voit le client</strong>
+              </a>
+              <a class="nav-card" href="labo.html">
+                <span>Côté fournil</span>
+                <strong>Ce que voit le labo</strong>
+              </a>
+            </div>
+            <div class="nav-foot">
+              <a href="tel:+33610601442">06 10 60 14 42</a>
+              <a href="mailto:alexandre@pikcel.fr">alexandre@pikcel.fr</a>
+            </div>
+          </div>
+        </div>
       </nav>
     </div>
   </header>
@@ -32,12 +61,17 @@
       <div>
         <p class="badge">Pour boulangers-pâtissiers</p>
         <h1>Le cahier de commandes<br>de votre boutique,<br>enfin lisible.</h1>
-        <p class="lead">Un QR au comptoir. Le client choisit dans <strong>votre</strong> catalogue. Le soir, le labo reçoit les totaux par mail. Pas de site internet. Pas d’appli. Pas de caisse.</p>
+        <p class="lead">Un QR code au comptoir.<br>Le client commande dans <strong>votre</strong> catalogue, sans couper la file.<br>Le labo reçoit les totaux, à l’heure que vous paramétrez.<br>Pas de site internet.<br>Pas d’appli.<br>Pas de caisse.</p>
         <div class="cta-row">
           <a class="btn btn-fill" href="commande.html">Voir ce que voit le client</a>
           <a class="btn btn-line" href="labo.html">Voir ce que voit le labo</a>
         </div>
-        <p class="hero-note">Démo Léonard · rien n’est débité · 2 minutes</p>
+        <div class="hero-qr-row">
+          <a class="hero-qr" href="commande.html">
+            <img id="hero-qr" alt="QR code : commander chez Léonard">
+          </a>
+          <p class="hero-note">Scannez, ou cliquez.<br>Démo Léonard · rien n’est débité.</p>
+        </div>
       </div>
       <div class="device-wrap">
         <div class="device">
@@ -50,9 +84,9 @@
   <section class="trust">
     <div class="wrap trust-in">
       <p>Pensé pour le labo</p>
-      <p>Sans site internet</p>
+      <p>Sans engagement</p>
       <p>Sans appli à installer</p>
-      <p>Le mail du labo à 18h</p>
+      <p>Le mail du labo, à votre heure</p>
     </div>
   </section>
 
@@ -60,22 +94,22 @@
     <div class="wrap">
       <p class="eyebrow-pro">C’est quoi</p>
       <h2>Le cahier que la vendeuse tient déjà — sauf qu’il est lisible le matin.</h2>
-      <p class="intro">Carnet de commandes n’est pas une caisse, ni un click &amp; collect, ni un site vitrine. C’est uniquement ce que vous prenez à l’avance : gâteaux, galettes, bûches, pièces montées. Le pain du matin, vous n’y touchez pas.</p>
+      <p class="intro">Carnet de commandes n’est pas une caisse, ni un click &amp; collect, ni un site vitrine.<br>C’est ce que vous prenez à l’avance, tous les jours : tartes, entremets, gâteaux, quiches, sandwiches.<br>Et aussi les fêtes : galettes, bûches, pièces montées.<br>Le pain du matin, vous n’y touchez pas.</p>
       <div class="grid-3">
         <article class="card lift">
           <span class="icon-dot">QR</span>
-          <h3>Un QR au comptoir</h3>
-          <p>Le client scanne et commande. La vendeuse tape la même chose pour ceux qui passent sans téléphone. Un seul carnet.</p>
+          <h3>Un QR code au comptoir</h3>
+          <p>Le client scanne et commande.<br>Ceux qui préfèrent le téléphone ou le comptoir, la vendeuse les saisit pareil.<br>Un seul carnet.<br>Le téléphone reste.</p>
         </article>
         <article class="card lift">
-          <span class="icon-dot">18h</span>
+          <span class="icon-dot">Mail</span>
           <h3>Une liste pour le labo</h3>
-          <p>La veille à 18h, le chef reçoit les totaux, produit par produit. Il imprime, ou il ouvre le téléphone. Il produit ça. Rien d’autre.</p>
+          <p>La veille, le chef reçoit les totaux, produit par produit.<br>L’heure du mail se paramètre selon votre convenance.<br>Il imprime, ou il ouvre le téléphone.<br>Il produit ça.<br>Rien d’autre.</p>
         </article>
         <article class="card lift">
           <span class="icon-dot">€</span>
           <h3>Le retrait en boutique</h3>
-          <p>On encaisse le solde, on coche « récupéré ». L’acompte, vous l’allumez seulement quand ça pique — habitués, vous le laissez fermé.</p>
+          <p>On encaisse au comptoir, on coche « récupéré ».<br>Le client vient chercher, comme aujourd’hui.</p>
         </article>
       </div>
     </div>
@@ -84,20 +118,20 @@
   <section class="block tone" id="probleme">
     <div class="wrap">
       <p class="eyebrow-pro">Le problème</p>
-      <h2>Vous connaissez déjà le cahier.</h2>
-      <p class="intro">Un nom, un produit, un jour — parfois sans téléphone, parfois illisible. Le labo ouvre à 4h et compte au doigt. Aux fêtes, ça explose.</p>
+      <h2>Le service, le cahier, le fournil — trois endroits, une commande.</h2>
+      <p class="intro">Aujourd’hui ça passe par le téléphone, un carnet, parfois un mot.<br>Toute l’année, ça coince aux heures de pointe.<br>Aux fêtes, ça explose.</p>
       <div class="grid-3">
         <article class="card">
-          <h3>Illisible à 4h</h3>
-          <p>La page de la vendeuse ne tient pas jusqu’au fournil. Un oubli, une rature, et c’est une fournée de trop — ou plus rien.</p>
+          <h3>Le téléphone coupe le service</h3>
+          <p>Un appel commande immobilise une vendeuse.<br>La file attend.<br>On n’enlève pas le téléphone : on offre un autre canal, pour ceux qui veulent commander sans déranger.</p>
         </article>
         <article class="card">
-          <h3>Le no-show coûte cher</h3>
-          <p>Un gros gâteau, une pièce montée. S’il ne vient pas, c’est la matière et le temps. L’acompte, seulement quand vous le décidez.</p>
+          <h3>Mal noté, mal transmis</h3>
+          <p>Orale, raturée, recopiée.<br>Un parfum faux, un oubli, une fournée de trop.<br>Ici la commande est saisie une fois, lisible jusqu’au labo.</p>
         </article>
         <article class="card">
-          <h3>Pas le moment d’une appli</h3>
-          <p>Vous n’avez pas besoin d’un logiciel de plus, ni d’un site. Juste que le cahier arrive lisible au labo, le soir.</p>
+          <h3>Les totaux se font à la main</h3>
+          <p>Carnets, feuilles, messages.<br>Le matin, il faut tout additionner.<br>Le mail du labo donne les totaux, à l’heure que vous choisissez.</p>
         </article>
       </div>
     </div>
@@ -106,24 +140,24 @@
   <section class="block" id="vues">
     <div class="wrap">
       <p class="eyebrow-pro">Deux faces</p>
-      <h2>Ce que voit le client. Ce que voit le labo.</h2>
-      <p class="intro">Même commande. Deux écrans. Rien à installer de chaque côté.</p>
+      <h2>Ce que voit le client.<br>Ce que voit le labo.</h2>
+      <p class="intro">Même commande.<br>Deux écrans.<br>Rien à installer de chaque côté.</p>
       <div class="split">
         <article class="split-card">
           <p class="split-kicker">Côté boutique</p>
           <h3>Le client commande tout seul</h3>
-          <p>Il choisit le produit, le jour de retrait, laisse son nom. S’il passe au comptoir, la vendeuse fait la même chose. Pas deux listes.</p>
+          <p>Plusieurs produits, un panier.<br>Puis un jour, une heure, un nom, un téléphone.<br>Sans monopoliser le comptoir.<br>S’il passe sans téléphone, la vendeuse tape la même chose.<br>Pas deux listes.</p>
           <ul class="ticks">
             <li>Votre catalogue, pas le nôtre</li>
-            <li>Acompte seulement si vous l’allumez</li>
-            <li>Retrait en boutique, pas de livraison</li>
+            <li>Paiement en boutique, au retrait</li>
+            <li>Pas de livraison</li>
           </ul>
           <a class="btn btn-fill" href="commande.html">Ouvrir la page client</a>
         </article>
         <article class="split-card is-dark">
           <p class="split-kicker">Côté fournil</p>
           <h3>Le chef a les totaux, pas les pages</h3>
-          <p>Le mail de 18h dit quoi produire demain. Le matin, la feuille du labo est déjà faite. On coche quand c’est récupéré.</p>
+          <p>Le mail du labo dit quoi produire demain.<br>L’heure, vous la réglez comme ça vous arrange.<br>Le matin, la feuille est déjà faite.<br>On coche quand c’est récupéré.</p>
           <ul class="ticks">
             <li>Totaux par produit, pas par client</li>
             <li>Imprimable, ou sur le téléphone</li>
@@ -138,28 +172,28 @@
   <section class="block tone" id="marche">
     <div class="wrap">
       <p class="eyebrow-pro">Comment ça marche</p>
-      <h2>Trois gestes. Comme le cahier.</h2>
-      <p class="intro">On le pose avec vous. Ensuite, ça tourne tout seul.</p>
+      <h2>Trois gestes.<br>Comme le cahier.</h2>
+      <p class="intro">On le pose avec vous.<br>Ensuite, ça tourne tout seul.</p>
       <ol class="steps">
         <li>
           <span>1</span>
           <div>
             <h3>On saisit votre catalogue</h3>
-            <p>Vingt minutes à l’install. Ce que vous vendez à l’avance entre dans le QR. Un nouveau parfum ? Un message, on le met. Vous n’ouvrez pas un logiciel.</p>
+            <p>Vingt minutes à l’install.<br>Ce que vous vendez à l’avance entre dans le QR.<br>Un nouveau parfum ?<br>Un message, on le met.<br>Vous n’ouvrez pas un logiciel.</p>
           </div>
         </li>
         <li>
           <span>2</span>
           <div>
-            <h3>Le QR reste au comptoir</h3>
-            <p>Le client scanne. La vendeuse tape. Une seule liste. Le pain du matin, la caisse, le click &amp; collect : on n’y touche pas.</p>
+            <h3>Le QR code reste au comptoir</h3>
+            <p>Le client scanne.<br>La vendeuse tape.<br>Une seule liste.<br>Le téléphone, le pain du matin, la caisse : on n’y touche pas.</p>
           </div>
         </li>
         <li>
           <span>3</span>
           <div>
             <h3>Le labo produit la liste</h3>
-            <p>Mail à 18h. Feuille le matin. Retrait en boutique. Si vous avez allumé l’acompte et qu’il ne vient pas, l’acompte reste.</p>
+            <p>Le mail, à l’heure que vous paramétrez.<br>Feuille le matin.<br>Retrait en boutique.</p>
           </div>
         </li>
       </ol>
@@ -169,31 +203,33 @@
   <section class="block" id="saisons">
     <div class="wrap">
       <p class="eyebrow-pro">Votre catalogue</p>
-      <h2>Ce que vous vendez à l’avance. Pas le pain du matin.</h2>
-      <p class="intro">On le tient avec vous. Galettes, bûches, gâteaux d’anniversaire, pièces montées — ce qui passe dans le cahier aujourd’hui.</p>
+      <h2>Ce que vous vendez tous les jours.<br>Et aussi les fêtes.</h2>
+      <p class="intro">On le tient avec vous.<br>Le quotidien d’abord : tartes, gâteaux, quiches, entremets.<br>Les pics ensuite : galettes, bûches, pièces montées.<br>Le pain du matin, la caisse : on n’y touche pas.</p>
       <div class="grid-2">
+        <article class="shot">
+          <img src="assets/gateau.jpg" alt="Gâteau et pâtisserie du quotidien">
+          <div>
+            <h3>Le fil de la semaine</h3>
+            <p>Tartes, entremets, gâteaux, quiches, commandes du week-end.<br>C’est ça le cahier, même hors fêtes.</p>
+            <div class="who">
+              <span class="tag is-main">Tartes</span>
+              <span class="tag is-main">Gâteaux</span>
+              <span class="tag">Quiches</span>
+              <span class="tag">Entremets</span>
+              <span class="tag">Week-end</span>
+            </div>
+          </div>
+        </article>
         <article class="shot">
           <img src="assets/viennoiserie.jpg" alt="Pièce de pâtisserie de fête">
           <div>
-            <h3>Les fêtes qui paient</h3>
-            <p>Bûches, galettes, Pâques, pièces montées. C’est là que le cahier explose — et que Carnet sert vraiment.</p>
+            <h3>Les pics de fêtes</h3>
+            <p>Bûches, galettes, Pâques, pièces montées.<br>Là, le cahier explose — Carnet aussi.</p>
             <div class="who">
               <span class="tag is-main">Galettes</span>
               <span class="tag is-main">Bûches</span>
               <span class="tag">Pâques</span>
               <span class="tag">Pièces montées</span>
-            </div>
-          </div>
-        </article>
-        <article class="shot">
-          <img src="assets/gateau.jpg" alt="Gâteau d’anniversaire">
-          <div>
-            <h3>Le fil de l’année</h3>
-            <p>Gâteaux d’anniversaire, entremets du week-end. Si ça tourne, l’abonnement tient 12 mois. Sinon, vous prenez la saison et vous coupez.</p>
-            <div class="who">
-              <span class="tag is-main">Anniversaires</span>
-              <span class="tag">Entremets</span>
-              <span class="tag">Week-end</span>
             </div>
           </div>
         </article>
@@ -204,19 +240,33 @@
   <section class="block tone" id="essai">
     <div class="wrap">
       <p class="eyebrow-pro">Essayer</p>
-      <h2>Faites le parcours. Vous êtes le client, puis le chef.</h2>
-      <p class="intro">Quatre écrans, deux minutes, rien n’est débité. Restez sur le même navigateur — le cahier de démo est dans votre téléphone.</p>
+      <h2>Faites le parcours.<br>Vous êtes le client, puis le chef.</h2>
+      <p class="intro">Quatre écrans, deux minutes, rien n’est débité.<br>Restez sur le même navigateur — le cahier de démo est dans votre téléphone.</p>
+      <div class="qr-stage">
+        <div>
+          <p class="eyebrow-pro">Au comptoir</p>
+          <h3 class="qr-title">Scannez.<br>C’est ce que le client voit.</h3>
+          <p class="intro">Le même QR que Léonard collerait près de la caisse.<br>Rien n’est débité.</p>
+          <a class="btn btn-line" href="qr.html">Affiche à imprimer</a>
+        </div>
+        <figure class="qr-card">
+          <img class="qr-shop" src="assets/logo-leonardd.png?v=2" alt="">
+          <strong>Léonard</strong>
+          <img class="qr-code" id="site-qr" alt="QR code : commander chez Léonard">
+          <p>Scannez pour commander</p>
+        </figure>
+      </div>
       <div class="grid-2">
         <article class="card">
           <span class="num">1</span>
           <h3>Le client commande</h3>
-          <p>Un produit du catalogue, un jour de retrait, un acompte simulé.</p>
+          <p>Les produits au panier.<br>Puis le jour, l’heure, le nom et le téléphone.</p>
           <p class="card-cta"><a href="commande.html">Ouvrir la page client</a></p>
         </article>
         <article class="card">
           <span class="num">2</span>
-          <h3>Le mail de 18h</h3>
-          <p>Ouvrez la boîte, puis « Simuler le mail de 18h » : les totaux pour demain.</p>
+          <h3>Le mail du labo</h3>
+          <p>Ouvrez la boîte, puis « Simuler le mail du labo » : les totaux pour demain.</p>
           <p class="card-cta"><a href="boite.html">Ouvrir la boîte du labo</a></p>
         </article>
         <article class="card">
@@ -227,8 +277,8 @@
         </article>
         <article class="card">
           <span class="num">4</span>
-          <h3>Le QR du comptoir</h3>
-          <p>À imprimer et coller. En vrai, c’est ça que le client scanne.</p>
+          <h3>Le QR code du comptoir</h3>
+          <p>À imprimer et coller.<br>En vrai, c’est ça que le client scanne.</p>
           <p class="card-cta"><a href="qr.html">Voir le QR</a></p>
         </article>
       </div>
@@ -239,19 +289,19 @@
   <section class="block tone" id="tarifs">
     <div class="wrap">
       <p class="eyebrow-pro">Tarifs</p>
-      <h2>Vous ne payez pas 12 mois pour trois semaines de fêtes.</h2>
-      <p class="intro">La saison d’abord. L’année, si les gâteaux d’anniversaire tournent aussi.</p>
+      <h2>Le quotidien, toute l’année.<br>Les fêtes, en plus.</h2>
+      <p class="intro">Tartes, gâteaux, week-end : si ça tourne, vous gardez l’année.<br>Un rush de fêtes : vous prenez la saison, vous arrêtez sans frais.<br>Résiliable à tout moment, sans engagement.</p>
       <div class="grid-3">
         <article class="card plan is-hot">
           <p class="plan-flag">Le plus choisi</p>
           <h3>Saison</h3>
           <p class="amount">49&nbsp;€ <span>/ mois</span></p>
-          <p>3 mois autour d’un pic. C’est ce qu’un patron signe avant les fêtes.</p>
+          <p>3 mois autour d’un pic.<br>Vous arrêtez quand vous voulez, sans frais.</p>
         </article>
         <article class="card plan">
           <h3>Année</h3>
           <p class="amount">39&nbsp;€ <span>/ mois</span></p>
-          <p>Si le carnet sert aussi hors fêtes. Ou 399&nbsp;€ réglés une fois.</p>
+          <p>Tartes, gâteaux, commandes du week-end — le cahier de toute l’année.<br>Ou 399&nbsp;€ réglés une fois.<br>Résiliable à tout moment.</p>
         </article>
         <article class="card plan">
           <h3>Un pic, sans abo</h3>
@@ -259,6 +309,7 @@
           <p>Pour essayer sur un vrai rush, sans s’engager l’année.</p>
         </article>
       </div>
+      <p class="plan-promise">Saison et Année : résiliables à tout moment.<br>Aucun frais de résiliation.</p>
     </div>
   </section>
 
@@ -268,23 +319,43 @@
       <h2>Ce qu’un patron demande.</h2>
       <details open>
         <summary>Il faut un site internet&nbsp;?</summary>
-        <p>Non. Beaucoup n’en ont pas. On héberge la page de commande. Un QR au comptoir. Plus tard, si vous voulez un vrai site, on branche la même page dessus.</p>
+        <p>Non.<br>Beaucoup n’en ont pas.<br>On héberge la page de commande.<br>Un QR code au comptoir.<br>Plus tard, si vous voulez un vrai site, on branche la même page dessus.</p>
       </details>
       <details>
         <summary>Le pain du matin aussi&nbsp;?</summary>
-        <p>Non. Pour ça vous avez la caisse. Là, c’est le cahier des fêtes et des gâteaux pris à l’avance.</p>
+        <p>Non.<br>Pour ça vous avez la caisse.<br>Là, c’est le cahier : le quotidien et les fêtes, pris à l’avance.</p>
+      </details>
+      <details>
+        <summary>Je peux arrêter quand je veux&nbsp;?</summary>
+        <p>Oui.<br>Saison et Année se résilient à tout moment, sans frais.<br>Pas d’engagement, pas de préavis pénalisant.</p>
       </details>
       <details>
         <summary>L’acompte est obligatoire&nbsp;?</summary>
-        <p>Non. Habitués du quartier : vous le laissez fermé. Gros gâteau, fêtes : vous l’allumez.</p>
+        <p>Non.<br>Seulement si vous le souhaitez.<br>Sinon, tout se paie au retrait, en caisse.</p>
       </details>
       <details>
         <summary>Je dois tout saisir tout seul&nbsp;?</summary>
-        <p>Non. Le catalogue, on le pose avec vous à l’install (20 min). Un nouveau parfum&nbsp;? Un message. Vous n’ouvrez pas un back-office à 5h.</p>
+        <p>Non.<br>Le catalogue, on le pose avec vous à l’install (20 min).<br>Un nouveau parfum&nbsp;?<br>Un message.<br>Vous n’ouvrez pas un back-office à 5h.</p>
       </details>
       <details>
         <summary>C’est une appli à télécharger&nbsp;?</summary>
-        <p>Non. Le client scanne. Le chef ouvre un mail, ou un lien. Rien à installer sur le téléphone de l’équipe.</p>
+        <p>Non.<br>Le client scanne.<br>Le chef ouvre un mail, ou un lien.<br>Rien à installer sur le téléphone de l’équipe.</p>
+      </details>
+      <details>
+        <summary>Je fonctionne très bien avec mon carnet.</summary>
+        <p>On ne le jette pas.<br>L’idée, c’est de voir s’il y a des commandes — le quotidien comme les fêtes — qui passeraient plus simplement, sans rature et sans recopier pour le labo.</p>
+      </details>
+      <details>
+        <summary>Mes clients préfèrent téléphoner.</summary>
+        <p>Ils peuvent.<br>Le QR est un canal de plus, pour ceux qui ne veulent pas attendre ou déranger.<br>La vendeuse saisit aussi les appels dans le même carnet.</p>
+      </details>
+      <details>
+        <summary>Je n’ai pas le temps d’apprendre un logiciel.</summary>
+        <p>Vous n’ouvrez pas un logiciel.<br>On pose le catalogue avec vous (20 min).<br>Ensuite : un QR code, un mail à l’heure que vous choisissez, une feuille le matin.</p>
+      </details>
+      <details>
+        <summary>Et si mes clients ne l’utilisent pas&nbsp;?</summary>
+        <p>On commence sur un pic, on regarde.<br>Si ça ne sert pas le labo, on arrête.<br>Pas d’adoption magique — un essai mesurable.</p>
       </details>
     </div>
   </section>
@@ -292,8 +363,8 @@
   <section class="band" id="contact">
     <div class="wrap">
       <p class="eyebrow-pro light">Pilote</p>
-      <h2>On le branche chez vous avant un pic.</h2>
-      <p>Si le chef imprime sa liste tout seul le matin, on continue. Sinon, on arrête.</p>
+      <h2>On le montre chez vous, sur vos produits, avant un pic.</h2>
+      <p>Si le chef imprime sa liste tout seul le matin, on continue.<br>Sinon, on arrête — sans frais, sans engagement.<br>Le but : plus de temps pour les clients, les produits, le métier — pas un logiciel de plus.</p>
       <div class="cta-row" style="margin-bottom:22px">
         <a class="btn btn-fill" href="commande.html">Voir ce que voit le client</a>
         <a class="btn btn-ghost" href="labo.html">Voir ce que voit le labo</a>
@@ -311,5 +382,18 @@
       <span>Démo · rien n’est débité</span>
     </div>
   </footer>
+  <script src="nav.js"></script>
+  <script>
+    (function () {
+      const url = new URL("commande.html", window.location.href).href;
+      const src =
+        "https://api.qrserver.com/v1/create-qr-code/?size=280x280&margin=8&data=" +
+        encodeURIComponent(url);
+      ["site-qr", "hero-qr"].forEach((id) => {
+        const img = document.getElementById(id);
+        if (img) img.src = src;
+      });
+    })();
+  </script>
 </body>
 </html>
