@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=29">
+  <link rel="stylesheet" href="styles.css?v=35">
 </head>
 <body class="site">
   <header class="mast">
@@ -29,21 +29,21 @@
             <a href="#tarifs">Tarifs</a>
           </div>
           <div class="nav-extra">
-            <p class="nav-pitch">Moins d’appels pendant le service.<br>Le soir, le labo a les totaux — pas le cahier illisible.</p>
+            <p class="nav-pitch">Cette page raconte le concept.<br>Le client a le QR. Le boulanger a une autre adresse, avec un code.</p>
             <ul class="nav-points">
               <li>Sans site</li>
               <li>Sans appli</li>
-              <li>Mail du labo</li>
+              <li>Code PIN</li>
             </ul>
-            <p class="nav-kicker">La démo, en 2 minutes</p>
+            <p class="nav-kicker">Deux pages indépendantes</p>
             <div class="nav-cards">
               <a class="nav-card" href="commande.html">
-                <span>Côté boutique</span>
-                <strong>Ce que voit le client</strong>
+                <span>Page publique</span>
+                <strong>Le client commande</strong>
               </a>
-              <a class="nav-card" href="labo.html">
-                <span>Côté fournil</span>
-                <strong>Ce que voit le labo</strong>
+              <a class="nav-card" href="patron.html">
+                <span>Page privée · PIN</span>
+                <strong>Le boulanger contrôle</strong>
               </a>
             </div>
             <div class="nav-foot">
@@ -61,10 +61,10 @@
       <div>
         <p class="badge">Pour boulangers-pâtissiers</p>
         <h1>Le cahier de commandes<br>de votre boutique,<br>enfin lisible.</h1>
-        <p class="lead">Un QR code au comptoir.<br>Le client commande dans <strong>votre</strong> catalogue, sans couper la file.<br>Le labo reçoit les totaux, à l’heure que vous paramétrez.<br>Pas de site internet.<br>Pas d’appli.<br>Pas de caisse.</p>
+        <p class="lead">Le client scanne le QR code au comptoir.<br>Il choisit les produits et le jour de retrait.<br>Vous ouvrez les commandes sur une autre page, avec un code.<br>Le labo reçoit les totaux, à l’heure que vous choisissez.<br>Pas de site internet.<br>Pas d’appli.<br>Pas de caisse.</p>
         <div class="cta-row">
-          <a class="btn btn-fill" href="commande.html">Voir ce que voit le client</a>
-          <a class="btn btn-line" href="labo.html">Voir ce que voit le labo</a>
+          <a class="btn btn-fill" href="commande.html">Page client (QR)</a>
+          <a class="btn btn-line" href="patron.html">Page boulanger (code)</a>
         </div>
         <div class="hero-qr-row">
           <a class="hero-qr" href="commande.html">
@@ -139,14 +139,14 @@
 
   <section class="block" id="vues">
     <div class="wrap">
-      <p class="eyebrow-pro">Deux faces</p>
-      <h2>Ce que voit le client.<br>Ce que voit le labo.</h2>
-      <p class="intro">Même commande.<br>Deux écrans.<br>Rien à installer de chaque côté.</p>
+      <p class="eyebrow-pro">Trois pages, trois adresses</p>
+      <h2>Le concept.<br>Le client.<br>Le boulanger.</h2>
+      <p class="intro">Ce n’est pas un seul site pour tout le monde.<br>Le QR ne mène pas au carnet.<br>Le carnet demande un code PIN.</p>
       <div class="split">
         <article class="split-card">
-          <p class="split-kicker">Côté boutique</p>
+          <p class="split-kicker">Page publique</p>
           <h3>Le client commande tout seul</h3>
-          <p>Plusieurs produits, un panier.<br>Puis un jour, une heure, un nom, un téléphone.<br>Sans monopoliser le comptoir.<br>S’il passe sans téléphone, la vendeuse tape la même chose.<br>Pas deux listes.</p>
+          <p>C’est le QR du comptoir.<br>Plusieurs produits, un panier.<br>Puis un jour, une heure, un nom, un téléphone.<br>Pas de mot de passe.<br>Pas accès aux commandes des autres.</p>
           <ul class="ticks">
             <li>Votre catalogue, pas le nôtre</li>
             <li>Paiement en boutique, au retrait</li>
@@ -155,15 +155,15 @@
           <a class="btn btn-fill" href="commande.html">Ouvrir la page client</a>
         </article>
         <article class="split-card is-dark">
-          <p class="split-kicker">Côté fournil</p>
-          <h3>Le chef a les totaux, pas les pages</h3>
-          <p>Le mail du labo dit quoi produire demain.<br>L’heure, vous la réglez comme ça vous arrange.<br>Le matin, la feuille est déjà faite.<br>On coche quand c’est récupéré.</p>
+          <p class="split-kicker">Page privée · code PIN</p>
+          <h3>Le boulanger contrôle le carnet</h3>
+          <p>Autre adresse, autre écran.<br>Les commandes, le chiffre, les retraits, le mail du labo.<br>Sans le code, on n’entre pas.</p>
           <ul class="ticks">
-            <li>Totaux par produit, pas par client</li>
-            <li>Imprimable, ou sur le téléphone</li>
-            <li>Pas de back-office à 5h du matin</li>
+            <li>Liste, totaux, suppressions</li>
+            <li>Mail du labo, à votre heure</li>
+            <li>Démo : le code est 2010</li>
           </ul>
-          <a class="btn btn-light" href="labo.html">Ouvrir la feuille du labo</a>
+          <a class="btn btn-light" href="patron.html">Ouvrir la page boulanger</a>
         </article>
       </div>
     </div>
@@ -240,8 +240,8 @@
   <section class="block tone" id="essai">
     <div class="wrap">
       <p class="eyebrow-pro">Essayer</p>
-      <h2>Faites le parcours.<br>Vous êtes le client, puis le chef.</h2>
-      <p class="intro">Quatre écrans, deux minutes, rien n’est débité.<br>Restez sur le même navigateur — le cahier de démo est dans votre téléphone.</p>
+      <h2>Faites le parcours.<br>D’abord le client, puis le boulanger.</h2>
+      <p class="intro">Deux pages, deux minutes, rien n’est débité.<br>Restez sur le même navigateur — le cahier de démo est dans votre téléphone.</p>
       <div class="qr-stage">
         <div>
           <p class="eyebrow-pro">Au comptoir</p>
@@ -265,20 +265,14 @@
         </article>
         <article class="card">
           <span class="num">2</span>
-          <h3>Le mail du labo</h3>
-          <p>Ouvrez la boîte, puis « Simuler le mail du labo » : les totaux pour demain.</p>
-          <p class="card-cta"><a href="boite.html">Ouvrir la boîte du labo</a></p>
+          <h3>Le boulanger ouvre son carnet</h3>
+          <p>Autre page, code PIN.<br>Démo : 2010.<br>Il voit les commandes, il envoie le récap.</p>
+          <p class="card-cta"><a href="patron.html">Ouvrir la page boulanger</a></p>
         </article>
         <article class="card">
           <span class="num">3</span>
-          <h3>La feuille du matin</h3>
-          <p>Ce que le chef imprime ou ouvre sur le téléphone, avant d’allumer les fours.</p>
-          <p class="card-cta"><a href="labo.html">Ouvrir la feuille du labo</a></p>
-        </article>
-        <article class="card">
-          <span class="num">4</span>
           <h3>Le QR code du comptoir</h3>
-          <p>À imprimer et coller.<br>En vrai, c’est ça que le client scanne.</p>
+          <p>À imprimer et coller.<br>En vrai, c’est ça que le client scanne — pas le carnet.</p>
           <p class="card-cta"><a href="qr.html">Voir le QR</a></p>
         </article>
       </div>
@@ -291,7 +285,7 @@
       <p class="eyebrow-pro">Tarifs</p>
       <h2>Le quotidien, toute l’année.<br>Les fêtes, en plus.</h2>
       <p class="intro">Tartes, gâteaux, week-end : si ça tourne, vous gardez l’année.<br>Un rush de fêtes : vous prenez la saison, vous arrêtez sans frais.<br>Résiliable à tout moment, sans engagement.</p>
-      <div class="grid-3">
+      <div class="grid-2">
         <article class="card plan is-hot">
           <p class="plan-flag">Le plus choisi</p>
           <h3>Saison</h3>
@@ -301,12 +295,7 @@
         <article class="card plan">
           <h3>Année</h3>
           <p class="amount">39&nbsp;€ <span>/ mois</span></p>
-          <p>Tartes, gâteaux, commandes du week-end — le cahier de toute l’année.<br>Ou 399&nbsp;€ réglés une fois.<br>Résiliable à tout moment.</p>
-        </article>
-        <article class="card plan">
-          <h3>Un pic, sans abo</h3>
-          <p class="amount">149&nbsp;€ <span>/ saison</span></p>
-          <p>Pour essayer sur un vrai rush, sans s’engager l’année.</p>
+          <p>Tartes, gâteaux, commandes du week-end — le cahier de toute l’année.</p>
         </article>
       </div>
       <p class="plan-promise">Saison et Année : résiliables à tout moment.<br>Aucun frais de résiliation.</p>
@@ -339,7 +328,11 @@
       </details>
       <details>
         <summary>C’est une appli à télécharger&nbsp;?</summary>
-        <p>Non.<br>Le client scanne.<br>Le chef ouvre un mail, ou un lien.<br>Rien à installer sur le téléphone de l’équipe.</p>
+        <p>Non.<br>Le client scanne le QR, sans code.<br>Le boulanger ouvre une autre adresse, avec un PIN.<br>Rien à installer sur le téléphone de l’équipe.</p>
+      </details>
+      <details>
+        <summary>Le client peut voir mes commandes&nbsp;?</summary>
+        <p>Non.<br>Le QR ouvre seulement la page pour commander.<br>Le carnet du boulanger est une autre adresse, derrière un code PIN.</p>
       </details>
       <details>
         <summary>Je fonctionne très bien avec mon carnet.</summary>
@@ -351,7 +344,7 @@
       </details>
       <details>
         <summary>Je n’ai pas le temps d’apprendre un logiciel.</summary>
-        <p>Vous n’ouvrez pas un logiciel.<br>On pose le catalogue avec vous (20 min).<br>Ensuite : un QR code, un mail à l’heure que vous choisissez, une feuille le matin.</p>
+        <p>Vous n’ouvrez pas un logiciel.<br>On pose le catalogue avec vous (20 min).<br>Ensuite : un QR pour le client, un code PIN pour le boulanger.</p>
       </details>
       <details>
         <summary>Et si mes clients ne l’utilisent pas&nbsp;?</summary>
@@ -366,8 +359,8 @@
       <h2>On le montre chez vous, sur vos produits, avant un pic.</h2>
       <p>Si le chef imprime sa liste tout seul le matin, on continue.<br>Sinon, on arrête — sans frais, sans engagement.<br>Le but : plus de temps pour les clients, les produits, le métier — pas un logiciel de plus.</p>
       <div class="cta-row" style="margin-bottom:22px">
-        <a class="btn btn-fill" href="commande.html">Voir ce que voit le client</a>
-        <a class="btn btn-ghost" href="labo.html">Voir ce que voit le labo</a>
+        <a class="btn btn-fill" href="commande.html">Page client (QR)</a>
+        <a class="btn btn-ghost" href="patron.html">Page boulanger (code)</a>
       </div>
       <div class="contact-box">
         <a class="btn btn-light" href="mailto:alexandre@pikcel.fr?subject=Carnet%20de%20commandes%20boulangerie">alexandre@pikcel.fr</a>

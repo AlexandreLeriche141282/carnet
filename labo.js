@@ -1,3 +1,7 @@
+if (!patronUnlocked()) {
+  window.location.replace("patron.html");
+}
+
 let labDate = tomorrowIso();
 let pendingDelete = null;
 

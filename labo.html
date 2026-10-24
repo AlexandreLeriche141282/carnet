@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=30">
+  <link rel="stylesheet" href="styles.css?v=33">
 </head>
 <body class="demo">
   <header class="mast">
@@ -22,25 +22,26 @@
       <nav class="nav" id="site-nav">
         <div class="nav-panel">
           <div class="nav-links">
-            <a href="index.html">Accueil</a>
-            <a href="commande.html">Ce que voit le client</a>
+            <a href="index.html">Le concept</a>
+            <a href="commande.html">Page client (QR)</a>
+            <a href="patron.html">Page boulanger</a>
           </div>
           <div class="nav-extra">
-            <p class="nav-pitch">Moins d’appels pendant le service.<br>Le soir, le labo a les totaux — pas le cahier illisible.</p>
+            <p class="nav-pitch">Cette feuille s’ouvre depuis le carnet du boulanger.<br>Sans le code PIN, on n’y entre pas.</p>
             <ul class="nav-points">
               <li>Sans site</li>
               <li>Sans appli</li>
-              <li>Mail du labo</li>
+              <li>Code PIN</li>
             </ul>
-            <p class="nav-kicker">La démo, en 2 minutes</p>
+            <p class="nav-kicker">Deux pages indépendantes</p>
             <div class="nav-cards">
               <a class="nav-card" href="commande.html">
-                <span>Côté boutique</span>
-                <strong>Ce que voit le client</strong>
+                <span>Page publique</span>
+                <strong>Le client commande</strong>
               </a>
-              <a class="nav-card" href="labo.html">
-                <span>Côté fournil</span>
-                <strong>Ce que voit le labo</strong>
+              <a class="nav-card" href="patron.html">
+                <span>Page privée · PIN</span>
+                <strong>Le boulanger contrôle</strong>
               </a>
             </div>
             <div class="nav-foot">
@@ -83,13 +84,13 @@
       <p class="note">Le chef imprime cette feuille le matin.<br>La vendeuse coche « Récupéré » au retrait.<br>Le chef peut supprimer une commande, si besoin.<br>Les commandes passées sur la page QR apparaissent ici.</p>
       <div class="links">
         <button class="ghost" type="button" onclick="window.print()">Imprimer</button>
-        <a href="boite.html">← Boîte mail</a>
+        <a href="patron.html">Page patron</a>
         <a href="commande.html">Page client (QR)</a>
       </div>
     </main>
   </div>
-  <script src="data.js?v=5"></script>
-  <script src="labo.js?v=30"></script>
+  <script src="data.js?v=8"></script>
+  <script src="labo.js?v=33"></script>
   <script src="nav.js"></script>
 </body>
 </html>

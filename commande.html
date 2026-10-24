@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=29">
+  <link rel="stylesheet" href="styles.css?v=33">
 </head>
 <body class="demo">
   <header class="mast">
@@ -24,25 +24,25 @@
       <nav class="nav" id="site-nav">
         <div class="nav-panel">
           <div class="nav-links">
-            <a href="index.html">Accueil</a>
-            <a href="labo.html">Ce que voit le labo</a>
+            <a href="index.html">Le concept</a>
+            <a href="patron.html">Page boulanger (code)</a>
           </div>
           <div class="nav-extra">
-            <p class="nav-pitch">Moins d’appels pendant le service.<br>Le soir, le labo a les totaux — pas le cahier illisible.</p>
+            <p class="nav-pitch">Cette page est le QR du comptoir.<br>Le carnet du boulanger est une autre adresse, avec un code.</p>
             <ul class="nav-points">
               <li>Sans site</li>
               <li>Sans appli</li>
-              <li>Mail du labo</li>
+              <li>Code PIN</li>
             </ul>
-            <p class="nav-kicker">La démo, en 2 minutes</p>
+            <p class="nav-kicker">Deux pages indépendantes</p>
             <div class="nav-cards">
               <a class="nav-card" href="commande.html">
-                <span>Côté boutique</span>
-                <strong>Ce que voit le client</strong>
+                <span>Page publique</span>
+                <strong>Le client commande</strong>
               </a>
-              <a class="nav-card" href="labo.html">
-                <span>Côté fournil</span>
-                <strong>Ce que voit le labo</strong>
+              <a class="nav-card" href="patron.html">
+                <span>Page privée · PIN</span>
+                <strong>Le boulanger contrôle</strong>
               </a>
             </div>
             <div class="nav-foot">
@@ -166,13 +166,13 @@
       <p class="sub">Un mail vient d’arriver dans la boîte du labo.<br>Démo : rien n’est débité.</p>
       <div class="ticket" id="ticket"></div>
       <div class="links">
-        <a href="boite.html">Ouvrir le mail du boulanger →</a>
-        <a href="labo.html">Voir la page labo</a>
+        <a href="patron.html">Ouvrir le carnet du boulanger (code)</a>
+        <a href="boite.html">Ouvrir le mail du labo →</a>
         <button class="ghost" id="again" type="button">Nouvelle commande</button>
       </div>
     </div>
   </div>
-  <script src="data.js"></script>
+  <script src="data.js?v=8"></script>
   <script src="app.js"></script>
   <script src="nav.js"></script>
 </body>

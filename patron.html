@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Carnet du boulanger — Léonard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=33">
+</head>
+<body class="demo">
+  <header class="mast">
+    <div class="wrap mast-in">
+      <a class="brand" href="index.html">
+        <img class="brand-logo" src="assets/logo-carnet.svg" alt="">
+        Carnet
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Ouvrir le menu">
+        <span></span>
+      </button>
+      <nav class="nav" id="site-nav">
+        <div class="nav-panel">
+          <div class="nav-links">
+            <a href="index.html">Le concept</a>
+            <a href="commande.html">Page client (QR)</a>
+          </div>
+          <div class="nav-extra">
+            <p class="nav-pitch">Trois pages, trois adresses.<br>Le client n’entre pas dans le carnet du boulanger.</p>
+            <ul class="nav-points">
+              <li>Sans site</li>
+              <li>Sans appli</li>
+              <li>Code PIN</li>
+            </ul>
+            <p class="nav-kicker">La démo, en 2 minutes</p>
+            <div class="nav-cards">
+              <a class="nav-card" href="commande.html">
+                <span>Page publique</span>
+                <strong>Le client commande</strong>
+              </a>
+              <a class="nav-card" href="patron.html">
+                <span>Page privée · PIN</span>
+                <strong>Le boulanger contrôle</strong>
+              </a>
+            </div>
+            <div class="nav-foot">
+              <a href="tel:+33610601442">06 10 60 14 42</a>
+              <a href="mailto:alexandre@pikcel.fr">alexandre@pikcel.fr</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <div id="patron-lock" class="phone lab-sheet">
+    <header class="shop-head">
+      <img class="shop-logo shop-logo-seal" src="assets/logo-leonardd.png?v=2" alt="Léonard Boulangerie">
+      <div>
+        <p class="eyebrow">Page boulanger</p>
+        <h1>Le carnet</h1>
+        <p class="sub">Cette adresse n’est pas le QR du comptoir.<br>Un code PIN, pour l’équipe seulement.</p>
+      </div>
+    </header>
+    <main>
+      <form id="patron-lock-form" novalidate>
+        <label for="patron-pin">Code PIN</label>
+        <input id="patron-pin" name="patron-pin" type="password" inputmode="numeric" autocomplete="off" maxlength="8" required>
+        <p class="field-error" id="pin-error" role="alert"></p>
+        <p class="note">Démo Léonard : le code est 2010.</p>
+        <button class="pay" type="submit">Ouvrir le carnet</button>
+      </form>
+    </main>
+  </div>
+
+  <div id="patron-app" class="phone lab-sheet hidden">
+    <header class="shop-head">
+      <img class="shop-logo shop-logo-seal" src="assets/logo-leonardd.png?v=2" alt="Léonard Boulangerie">
+      <div>
+        <p class="eyebrow">Page boulanger · démo</p>
+        <h1>Les commandes</h1>
+        <p class="sub" id="when">Léonard</p>
+      </div>
+    </header>
+
+    <main>
+      <section>
+        <h2>Le jour</h2>
+        <div class="week-days" id="week"></div>
+        <label class="sr-only" for="patron-date">Jour à consulter</label>
+        <input id="patron-date" type="date">
+      </section>
+
+      <section>
+        <h2>Le jour en un coup d’œil</h2>
+        <div class="totals" id="totals"></div>
+      </section>
+
+      <section>
+        <h2>Commandes</h2>
+        <div class="list" id="list"></div>
+      </section>
+
+      <section>
+        <h2>Mail du labo</h2>
+        <form id="mail-form" novalidate>
+          <p class="field-hint">Le chef reçoit les totaux, à l’heure que vous réglez.</p>
+          <label for="lab-mail">Adresse du labo</label>
+          <input id="lab-mail" name="lab-mail" type="email" autocomplete="email" placeholder="contact@leonardd.fr" required>
+          <p class="field-error" id="lab-mail-error" role="alert"></p>
+          <div class="row" style="margin-top:12px">
+            <div>
+              <label for="lab-hour">Heure d’envoi</label>
+              <select id="lab-hour" name="lab-hour"></select>
+            </div>
+          </div>
+          <p class="note">En boutique, ce mail part tout seul à l’heure choisie.<br>Ici, vous l’envoyez à la main : ça ouvre votre messagerie, et une copie s’affiche dans la boîte démo.</p>
+          <button class="pay" type="submit" style="margin-top:14px">
+            Envoyer le récap maintenant
+            <small>Ouvre le mail + copie dans la boîte démo</small>
+          </button>
+        </form>
+        <p class="mail-ok hidden" id="mail-status" role="status"></p>
+      </section>
+
+      <div class="links">
+        <button class="ghost" type="button" onclick="window.print()">Imprimer la feuille</button>
+        <a href="boite.html">Ouvrir la boîte démo</a>
+        <button class="ghost" id="lock-out" type="button">Fermer le carnet</button>
+      </div>
+    </main>
+  </div>
+  <script src="data.js?v=8"></script>
+  <script src="patron.js?v=33"></script>
+  <script src="nav.js"></script>
+</body>
+</html>

@@ -1,6 +1,10 @@
 const KEY = "leroy-commandes-v5";
 const MAIL_KEY = "leroy-mails-v2";
 const CART_KEY = "leroy-panier-v2";
+const MAIL_SET_KEY = "leroy-mail-set-v1";
+const PATRON_AUTH_KEY = "leroy-patron-auth";
+const PATRON_PIN = "2010";
+const DEFAULT_LAB_MAIL = "contact@leonardd.fr";
 const times = ["8h", "9h", "10h", "11h", "12h", "14h", "15h", "16h", "17h", "18h"];
 const PICKUP_DAYS = 21;
 
@@ -380,7 +384,7 @@ function pushOrderMail(order) {
   const items = orderItems(order);
   addMail({
     type: "order",
-    to: "contact@leonardd.fr",
+    to: loadMailSettings().to,
     from: "Carnet de commandes <commandes@carnet.fr>",
     subject: `Commande : ${order.name} — ${items.length} produit${items.length > 1 ? "s" : ""}`,
     preview: `Retrait ${pickupLabel(order)} · ${euro(orderTotal(order))} au comptoir`,
@@ -402,35 +406,111 @@ function pushOrderMail(order) {
   });
 }
 
-function pushRecapMail() {
-  const date = tomorrowIso();
-  const orders = ordersForDay(date);
+function isEmailOk(value) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((value || "").trim());
+}
+
+function loadMailSettings() {
+  const fallback = { to: DEFAULT_LAB_MAIL, hour: "18h" };
+  const raw = localStorage.getItem(MAIL_SET_KEY);
+  if (!raw) return fallback;
+  try {
+    const saved = JSON.parse(raw);
+    return {
+      to: isEmailOk(saved.to) ? saved.to.trim() : fallback.to,
+      hour: times.includes(saved.hour) ? saved.hour : fallback.hour,
+    };
+  } catch (err) {
+    return fallback;
+  }
+}
+
+function saveMailSettings(settings) {
+  localStorage.setItem(MAIL_SET_KEY, JSON.stringify(settings));
+}
+
+function recapPayload(date, to) {
+  const when = isIsoDate(date) ? date : tomorrowIso();
+  const dest = isEmailOk(to) ? to.trim() : loadMailSettings().to;
+  const hour = loadMailSettings().hour;
+  const orders = ordersForDay(when);
+  const subject = `${formatDateFr(when)} — ${orders.length} commande${orders.length > 1 ? "s" : ""} à produire`;
+  const body = [
+    `Bonjour,`,
+    ``,
+    `Récap labo · envoi ${hour}`,
+    `Production : ${formatDateFr(when)}`,
+    ``,
+    `À FAIRE`,
+    totalsText(orders) || "(aucune commande)",
+    `Total : ${orders.length} commande${orders.length === 1 ? "" : "s"}`,
+    ``,
+    `COMPTOIR`,
+    ...orders.map((o) => `${o.name} · ${orderLabel(o)} · retrait ${pickupLabel(o)} · ${euro(orderTotal(o))} au retrait`),
+    ``,
+    `Ouvrez la feuille du labo pour imprimer ou cocher les retraits.`,
+  ].join("\n");
+  return {
+    to: dest,
+    subject,
+    preview: `Retrait ${formatDateFr(when)} · ${orders.length} commande${orders.length > 1 ? "s" : ""}`,
+    body,
+    orders,
+    date: when,
+  };
+}
+
+function pushRecapMail(date, to) {
+  const mail = recapPayload(date, to);
   addMail({
     type: "recap",
-    to: "contact@leonardd.fr",
+    to: mail.to,
     from: "Carnet de commandes <commandes@carnet.fr>",
-    subject: `Demain ${formatDateFr(date)} — ${orders.length} commandes à produire`,
-    preview: "Liste labo + totaux. Un seul mail, le soir.",
-    body: [
-      `Bonjour,`,
-      ``,
-      `Récap automatique · à l’heure choisie`,
-      `Production de demain : ${formatDateFr(date)}`,
-      ``,
-      `À FAIRE`,
-      totalsText(orders) || "(aucune commande)",
-      `Total : ${orders.length} commandes`,
-      ``,
-      `COMPTOIR`,
-      ...orders.map((o) => `${o.name} · ${orderLabel(o)} · retrait ${pickupLabel(o)} · ${euro(orderTotal(o))} au retrait`),
-      ``,
-      `Ouvrez la page labo pour imprimer ou cocher les retraits.`,
-    ].join("\n"),
+    subject: mail.subject,
+    preview: mail.preview,
+    body: mail.body,
   });
+  return mail;
+}
+
+function openMailto(to, subject, body) {
+  const href = `mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  const link = document.createElement("a");
+  link.href = href;
+  link.rel = "noopener";
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+}
+
+function patronUnlocked() {
+  try {
+    return sessionStorage.getItem(PATRON_AUTH_KEY) === "ok";
+  } catch (err) {
+    return false;
+  }
+}
+
+function unlockPatron() {
+  try {
+    sessionStorage.setItem(PATRON_AUTH_KEY, "ok");
+  } catch (err) {
+    /* ignore */
+  }
+}
+
+function lockPatron() {
+  try {
+    sessionStorage.removeItem(PATRON_AUTH_KEY);
+  } catch (err) {
+    /* ignore */
+  }
 }
 
 function resetDemo() {
   localStorage.removeItem(KEY);
   localStorage.removeItem(MAIL_KEY);
   localStorage.removeItem(CART_KEY);
+  localStorage.removeItem(MAIL_SET_KEY);
+  lockPatron();
 }
