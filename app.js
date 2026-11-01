@@ -66,7 +66,7 @@ function renderChoices() {
     .map(
       (s) => `
       <button class="choice ${state.size === s.id ? "is-on" : ""}" data-size="${s.id}" type="button">
-        <span><strong>${s.label}</strong><span>${s.detail}</span></span>
+        <span><strong>${s.label}</strong>${s.detail ? `<span>${s.detail}</span>` : ""}</span>
         <span class="price">${euro(s.price)}</span>
       </button>`
     )

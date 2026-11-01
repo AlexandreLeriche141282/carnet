@@ -67,15 +67,15 @@ const catalog = [
     id: "tarte",
     name: "Tarte",
     detail: "Tous les jours",
-    photo: "assets/gateau.jpg",
+    photo: "assets/tarte_citron_meringue.webp?v=2",
     sizes: [
-      { id: "6", label: "6 parts", detail: "à partager", price: 18 },
-      { id: "8", label: "8 parts", detail: "famille", price: 24 },
+      { id: "6", label: "6 personnes", detail: "", price: 18 },
+      { id: "8", label: "8 personnes", detail: "", price: 24 },
     ],
     flavors: [
-      { id: "citron", name: "Citron meringuée", photo: "assets/gateau.jpg", layers: ["Pâte sablée", "Curd citron", "Meringue italienne"] },
-      { id: "fraise", name: "Fraises", photo: "assets/gateau.jpg", layers: ["Pâte sablée", "Crème pâtissière", "Fraises fraîches"] },
-      { id: "pomme", name: "Pommes", photo: "assets/viennoiserie.jpg", layers: ["Pâte sablée", "Compotée de pommes", "Pommes rôties"] },
+      { id: "citron", name: "Citron meringuée", photo: "assets/tarte_citron_meringue.webp?v=2", layers: ["Pâte sablée", "Crème citron", "Meringue italienne"] },
+      { id: "fraise", name: "Fraises", photo: "assets/tarte-aux-fraises.png", layers: ["Pâte sablée", "Crème pâtissière", "Fraises fraîches"] },
+      { id: "pomme", name: "Pommes", photo: "assets/tarte-aux-pommes.webp?v=1", layers: ["Pâte sablée", "Compotée de pommes", "Pommes rôties"] },
       { id: "chocolat", name: "Chocolat", photo: "assets/gateau.jpg", layers: ["Pâte sablée", "Ganache chocolat"] },
     ],
   },
@@ -85,8 +85,8 @@ const catalog = [
     detail: "Tous les jours",
     photo: "assets/gateau.jpg",
     sizes: [
-      { id: "8", label: "8 parts", detail: "famille", price: 32 },
-      { id: "12", label: "12 parts", detail: "grand format", price: 48 },
+      { id: "8", label: "8 personnes", detail: "", price: 32 },
+      { id: "12", label: "12 personnes", detail: "grand format", price: 48 },
     ],
     flavors: [
       { id: "vanille", name: "Vanille", photo: "assets/gateau.jpg", layers: ["Génoise", "Crème vanille"] },
@@ -100,8 +100,8 @@ const catalog = [
     detail: "Tous les jours",
     photo: "assets/viennoiserie.jpg",
     sizes: [
-      { id: "6", label: "6 parts", detail: "à partager", price: 16 },
-      { id: "8", label: "8 parts", detail: "famille", price: 22 },
+      { id: "6", label: "6 personnes", detail: "", price: 16 },
+      { id: "8", label: "8 personnes", detail: "", price: 22 },
     ],
     flavors: [
       { id: "lorraine", name: "Lorraine", photo: "assets/viennoiserie.jpg", layers: ["Pâte brisée", "Lardons", "Emmental"] },
@@ -115,8 +115,8 @@ const catalog = [
     detail: "Fêtes",
     photo: "assets/buche-marron.webp",
     sizes: [
-      { id: "6", label: "6 parts", detail: "à partager", price: 28 },
-      { id: "8", label: "8 parts", detail: "à partager", price: 36 },
+      { id: "6", label: "6 personnes", detail: "", price: 28 },
+      { id: "8", label: "8 personnes", detail: "", price: 36 },
     ],
     flavors: [
       {
@@ -151,9 +151,9 @@ const catalog = [
     detail: "À la date",
     photo: "assets/viennoiserie.jpg",
     sizes: [
-      { id: "6", label: "6 parts", detail: "4 à 6 personnes", price: 22 },
-      { id: "8", label: "8 parts", detail: "6 à 8 personnes", price: 28 },
-      { id: "10", label: "10 parts", detail: "8 à 10 personnes", price: 34 },
+      { id: "6", label: "6 personnes", detail: "4 à 6 personnes", price: 22 },
+      { id: "8", label: "8 personnes", detail: "6 à 8 personnes", price: 28 },
+      { id: "10", label: "10 personnes", detail: "8 à 10 personnes", price: 34 },
     ],
     flavors: [
       { id: "frangipane", name: "Frangipane", photo: "assets/viennoiserie.jpg", layers: ["Pâte feuilletée", "Crème d’amandes"] },
@@ -167,8 +167,8 @@ const catalog = [
     detail: "Événement",
     photo: "assets/viennoiserie.jpg",
     sizes: [
-      { id: "20", label: "20 parts", detail: "cocktail", price: 90 },
-      { id: "30", label: "30 parts", detail: "réception", price: 130 },
+      { id: "20", label: "20 personnes", detail: "cocktail", price: 90 },
+      { id: "30", label: "30 personnes", detail: "réception", price: 130 },
     ],
     flavors: [
       { id: "nature", name: "Nature", photo: "assets/viennoiserie.jpg", layers: ["Choux", "Crème pâtissière"] },
@@ -205,7 +205,7 @@ const seed = [
     phone: "06 11 22 33 44",
     date: tomorrowIso(),
     time: "10h",
-    items: [{ product: "Tarte", size: "6", flavor: "Citron meringuée", composition: "Pâte sablée · Curd citron · Meringue italienne", price: 18, qty: 1 }],
+    items: [{ product: "Tarte", size: "6", flavor: "Citron meringuée", composition: "Pâte sablée · Crème citron · Meringue italienne", price: 18, qty: 1 }],
     price: 18,
     done: false,
   },
@@ -254,7 +254,7 @@ function itemQty(item) {
 
 function itemLabel(item) {
   const qty = itemQty(item) > 1 ? ` × ${itemQty(item)}` : "";
-  return [item.product, item.size ? `${item.size} parts` : "", item.flavor].filter(Boolean).join(" · ") + qty;
+  return [item.product, item.size ? `${item.size} personnes` : "", item.flavor].filter(Boolean).join(" · ") + qty;
 }
 
 function orderItems(o) {
