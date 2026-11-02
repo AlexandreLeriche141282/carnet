@@ -7,30 +7,27 @@
   <meta name="description" content="Le cahier de commandes de la boutique, lisible pour le labo. Moins d’appels pendant le service, moins d’erreurs de transmission. Sans site, sans appli, sans caisse.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=48">
-  <script src="motion.js?v=1"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=57">
+  <script src="motion.js?v=2"></script>
 </head>
 <body class="site">
   <header class="mast">
     <div class="wrap mast-in">
       <a class="brand" href="index.html">
-        <img class="brand-logo" src="assets/logo-carnet.svg?v=5" alt="">
-        Carnet
+        <img class="brand-logo" src="assets/logo-carnet.svg?v=6" alt="">
+        Carnet<span class="brand-dot">.</span>
       </a>
-      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Ouvrir le menu">
-        <span></span>
-      </button>
       <nav class="nav" id="site-nav">
         <div class="nav-panel">
           <div class="nav-links">
             <a href="#quoi">C’est quoi</a>
             <a href="#marche">Comment ça marche</a>
-            <a href="#essai">Essayer</a>
+            <a class="is-act" href="#essai">Essayer</a>
             <a href="#tarifs">Tarifs</a>
           </div>
           <div class="nav-extra">
-            <p class="nav-pitch">Cette page raconte le concept.<br>Le client a le QR. Le boulanger a une autre adresse, avec un code.</p>
+            <p class="nav-pitch">Le cahier de commandes de la boutique.<br>Lisible pour le labo.</p>
             <ul class="nav-points">
               <li>Sans site</li>
               <li>Sans appli</li>
@@ -54,6 +51,9 @@
           </div>
         </div>
       </nav>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Ouvrir le menu">
+        <span></span>
+      </button>
     </div>
   </header>
 
@@ -61,28 +61,14 @@
     <div class="wrap hero-grid">
       <div>
         <p class="badge">Pour boulangers-pâtissiers</p>
-        <h1>Le cahier de commandes<br>de votre boutique,<br>enfin lisible.</h1>
-        <p class="lead">Le client scanne le QR code au comptoir.<br>Le même, sur les réseaux ou sur l’emballage.<br>Il choisit les produits et le jour de retrait.<br>Vous ouvrez les commandes sur une autre page, avec un code.<br>Le labo reçoit les totaux, à l’heure que vous choisissez.<br>Pas de site internet.<br>Pas d’appli.<br>Pas de caisse.</p>
+        <h1>Le cahier de commandes<br>de votre boutique,<br><em>enfin lisible.</em></h1>
+        <p class="lead">Vos clients commandent par QR code.<br>Le labo reçoit les totaux la veille.<br>Sans appli, sans site, sans caisse.</p>
         <div class="cta-row">
-          <a class="btn btn-fill" href="commande.html">Page client (QR)</a>
-          <a class="btn btn-line" href="patron.html">Page boulanger (code)</a>
-        </div>
-        <div class="hero-qr-row">
-          <a class="hero-qr" href="commande.html">
-            <img id="hero-qr" alt="QR code : commander chez Léonard">
-          </a>
-          <p class="hero-note">Scannez, ou cliquez.<br>Démo Léonard · rien n’est débité.</p>
+          <a class="btn btn-fill" href="commande.html">Tester la démo client</a>
+          <a class="btn btn-line" href="patron.html">Voir le côté boulanger</a>
         </div>
       </div>
       <div class="device-wrap">
-        <figure class="hero-polaroid hero-polaroid-a">
-          <img src="assets/tarte_citron_meringue.webp?v=2" alt="Tarte citron meringuée">
-          <figcaption>Citron meringuée</figcaption>
-        </figure>
-        <figure class="hero-polaroid hero-polaroid-b">
-          <img src="assets/tarte-aux-fraises.png" alt="Tarte aux fraises">
-          <figcaption>Fraises</figcaption>
-        </figure>
         <div class="device">
           <iframe src="commande.html" title="Ce que le client voit en scannant le QR" loading="lazy"></iframe>
         </div>
@@ -132,7 +118,7 @@
     </div>
   </section>
 
-  <section class="block tone" id="probleme">
+  <section class="block is-crust" id="probleme">
     <div class="wrap">
       <p class="eyebrow-pro">Le problème</p>
       <h2>Le service, le cahier, le fournil — trois endroits, une commande.</h2>
@@ -171,7 +157,7 @@
           </ul>
           <a class="btn btn-fill" href="commande.html">Ouvrir la page client</a>
         </article>
-        <article class="split-card is-dark">
+        <article class="split-card">
           <p class="split-kicker">Page privée · code PIN</p>
           <h3>Le boulanger contrôle le carnet</h3>
           <p>Autre adresse, autre écran.<br>Les commandes, le chiffre, les retraits, le mail du labo.<br>Sans le code, on n’entre pas.</p>
@@ -180,34 +166,34 @@
             <li>Mail du labo, à votre heure</li>
             <li>Démo : le code est 2010</li>
           </ul>
-          <a class="btn btn-light" href="patron.html">Ouvrir la page boulanger</a>
+          <a class="btn btn-line" href="patron.html">Ouvrir la page boulanger</a>
         </article>
       </div>
     </div>
   </section>
 
-  <section class="block tone" id="marche">
+  <section class="block" id="marche">
     <div class="wrap">
       <p class="eyebrow-pro">Comment ça marche</p>
       <h2>Trois gestes.<br>Comme le cahier.</h2>
       <p class="intro">On le pose avec vous.<br>Ensuite, ça tourne tout seul.</p>
       <ol class="steps">
         <li>
-          <span>1</span>
+          <span>01</span>
           <div>
             <h3>On saisit votre catalogue</h3>
             <p>Vingt minutes à l’install.<br>Ce que vous vendez à l’avance entre dans le QR.<br>Un nouveau parfum ?<br>Un message, on le met.<br>Vous n’ouvrez pas un logiciel.</p>
           </div>
         </li>
         <li>
-          <span>2</span>
+          <span>02</span>
           <div>
             <h3>Le QR code reste au comptoir</h3>
             <p>Et aussi sur les réseaux, ou sur l’emballage.<br>Le client scanne.<br>La vendeuse tape.<br>Une seule liste.<br>Le téléphone, le pain du matin, la caisse : on n’y touche pas.</p>
           </div>
         </li>
         <li>
-          <span>3</span>
+          <span>03</span>
           <div>
             <h3>Le labo produit la liste</h3>
             <p>Le mail, à l’heure que vous paramétrez.<br>Feuille le matin.<br>Retrait en boutique.</p>
@@ -222,39 +208,16 @@
       <p class="eyebrow-pro">Votre catalogue</p>
       <h2>Ce que vous vendez tous les jours.<br>Et aussi les fêtes.</h2>
       <p class="intro">On le tient avec vous.<br>Le quotidien d’abord : tartes, gâteaux, quiches, entremets.<br>Les pics ensuite : galettes, bûches, pièces montées.<br>Le pain du matin, la caisse : on n’y touche pas.</p>
-      <div class="grid-2">
-        <article class="shot">
-          <img src="assets/tarte_citron_meringue.webp?v=2" alt="Tarte citron meringuée">
-          <div>
-            <h3>Le fil de la semaine</h3>
-            <p>Tartes, entremets, gâteaux, quiches, commandes du week-end.<br>C’est ça le cahier, même hors fêtes.</p>
-            <div class="who">
-              <span class="tag is-main">Tartes</span>
-              <span class="tag is-main">Gâteaux</span>
-              <span class="tag">Quiches</span>
-              <span class="tag">Entremets</span>
-              <span class="tag">Week-end</span>
-            </div>
-          </div>
-        </article>
-        <article class="shot">
-          <img src="assets/buche-marron.webp" alt="Bûche de fête">
-          <div>
-            <h3>Les pics de fêtes</h3>
-            <p>Bûches, galettes, Pâques, pièces montées.<br>Là, le cahier explose — Carnet aussi.</p>
-            <div class="who">
-              <span class="tag is-main">Galettes</span>
-              <span class="tag is-main">Bûches</span>
-              <span class="tag">Pâques</span>
-              <span class="tag">Pièces montées</span>
-            </div>
-          </div>
-        </article>
+      <div class="product-grid">
+        <img src="assets/tarte_citron_meringue.webp?v=2" alt="Tarte citron meringuée">
+        <img src="assets/tarte-aux-fraises.png" alt="Tarte aux fraises">
+        <img src="assets/tarte-aux-pommes.webp?v=1" alt="Tarte aux pommes">
+        <img src="assets/buche-marron.webp" alt="Bûche de fête">
       </div>
     </div>
   </section>
 
-  <section class="block tone" id="essai">
+  <section class="block" id="essai">
     <div class="wrap">
       <p class="eyebrow-pro">Essayer</p>
       <h2>Faites le parcours.<br>D’abord le client, puis le boulanger.</h2>
@@ -275,7 +238,7 @@
       </div>
       <ol class="path">
         <li>
-          <span>1</span>
+          <span>01</span>
           <div>
             <h3>Le client commande</h3>
             <p>Les produits au panier.<br>Puis le jour, l’heure, le nom et le téléphone.</p>
@@ -283,7 +246,7 @@
           </div>
         </li>
         <li>
-          <span>2</span>
+          <span>02</span>
           <div>
             <h3>Le boulanger ouvre son carnet</h3>
             <p>Autre page, code PIN.<br>Démo : 2010.<br>Il voit les commandes, il envoie le récap.</p>
@@ -291,7 +254,7 @@
           </div>
         </li>
         <li>
-          <span>3</span>
+          <span>03</span>
           <div>
             <h3>Le QR code du comptoir</h3>
             <p>À imprimer et coller.<br>À poster sur les réseaux.<br>À mettre sur l’emballage.<br>En vrai, c’est ça que le client scanne — pas le carnet.</p>
@@ -303,7 +266,7 @@
     </div>
   </section>
 
-  <section class="block tone" id="tarifs">
+  <section class="block" id="tarifs">
     <div class="wrap">
       <p class="eyebrow-pro">Tarifs</p>
       <h2>Un mois offert.<br>Ensuite, 39&nbsp;€ par mois.</h2>
@@ -321,14 +284,14 @@
           <p>Tartes, gâteaux, commandes du week-end.<br>Résiliable à tout moment, sans frais.</p>
         </article>
       </div>
-      <p class="plan-promise">Le premier mois est offert.<br>Ensuite, vous arrêtez quand vous voulez, sans frais.</p>
+      <p class="plan-promise">Le premier mois est offert.<br><em>Ensuite, vous arrêtez quand vous voulez, sans frais.</em></p>
     </div>
   </section>
 
   <section class="block faq" id="faq">
     <div class="wrap">
-      <p class="eyebrow-pro">Questions</p>
-      <h2>Ce qu’un patron demande.</h2>
+      <p class="eyebrow-pro">FAQ</p>
+      <h2>Avant de se lancer.</h2>
       <details open>
         <summary>Il faut un site internet&nbsp;?</summary>
         <p>Non.<br>Beaucoup n’en ont pas.<br>On héberge la page de commande.<br>Un QR code au comptoir, sur les réseaux, ou sur l’emballage.<br>Plus tard, si vous voulez un vrai site, on branche la même page dessus.</p>
@@ -381,13 +344,13 @@
       <p class="eyebrow-pro light">Pilote</p>
       <h2>On installe vos produits et vos tarifs.<br>Avec photo, ou sans.</h2>
       <p>Si le chef imprime sa liste tout seul le matin, on continue.<br>Sinon, on arrête — sans frais, sans engagement.<br>Le but : plus de temps pour les clients, les produits, le métier — pas un logiciel de plus.</p>
-      <div class="cta-row" style="margin-bottom:22px">
+      <div class="cta-row contact-cta">
         <a class="btn btn-fill" href="commande.html">Page client (QR)</a>
-        <a class="btn btn-ghost" href="patron.html">Page boulanger (code)</a>
+        <a class="btn btn-line" href="patron.html">Page boulanger (code)</a>
       </div>
       <div class="contact-box">
-        <a class="btn btn-light" href="mailto:alexandre@pikcel.fr?subject=Carnet%20de%20commandes%20boulangerie">alexandre@pikcel.fr</a>
-        <a class="btn btn-ghost" href="tel:+33610601442">06 10 60 14 42</a>
+        <a class="btn btn-line" href="mailto:alexandre@pikcel.fr?subject=Carnet%20de%20commandes%20boulangerie">alexandre@pikcel.fr</a>
+        <a class="btn btn-line" href="tel:+33610601442">06 10 60 14 42</a>
       </div>
     </div>
   </section>
@@ -405,7 +368,7 @@
       const src =
         "https://api.qrserver.com/v1/create-qr-code/?size=280x280&margin=8&data=" +
         encodeURIComponent(url);
-      ["site-qr", "hero-qr"].forEach((id) => {
+      ["site-qr"].forEach((id) => {
         const img = document.getElementById(id);
         if (img) img.src = src;
       });

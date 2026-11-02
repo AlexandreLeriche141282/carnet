@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" role="img" aria-label="Carnet">
-  <rect width="64" height="64" rx="18" fill="#c45c32"/>
-  <rect x="10" y="10" width="44" height="44" rx="12" fill="#fffaf4"/>
-  <rect x="16.5" y="16" width="3.4" height="32" rx="1.7" fill="#c45c32"/>
-  <rect x="26" y="22" width="20" height="4.8" rx="2.4" fill="#1c1410"/>
-  <rect x="26" y="31.1" width="18.5" height="4.8" rx="2.4" fill="#1c1410"/>
-  <rect x="26" y="40.2" width="12.5" height="4.8" rx="2.4" fill="#1c1410"/>
+  <rect width="64" height="64" rx="18" fill="#ae5528"/>
+  <rect x="10" y="10" width="44" height="44" rx="12" fill="#fffdf7"/>
+  <rect x="16.5" y="16" width="3.4" height="32" rx="1.7" fill="#ae5528"/>
+  <rect x="26" y="22" width="20" height="4.8" rx="2.4" fill="#2d1d14"/>
+  <rect x="26" y="31.1" width="18.5" height="4.8" rx="2.4" fill="#2d1d14"/>
+  <rect x="26" y="40.2" width="12.5" height="4.8" rx="2.4" fill="#2d1d14"/>
 </svg>

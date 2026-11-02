@@ -1,0 +1,40 @@
+---
+description: Charte visuelle Carnet — fiche de boulangerie, pas logiciel de start-up
+alwaysApply: true
+---
+
+# Charte visuelle
+
+Le site doit donner l’impression d’une fiche de boulangerie, pas d’une app. Une page crème, une seule couleur chaude pour agir, une seule bande sombre.
+
+## Polices (deux seulement)
+
+- **Fraunces** 500/700 (`--serif`) : titres, grands nombres, prix, logo « Carnet. », citation en italique. `letter-spacing: -0.02em`. Pas de graisse 600.
+- **Figtree** 400/500/600 (`--sans`) : tout le texte. Le body l’utilise déjà.
+- Pas de 700 sur du corps. Pas de 3e police (Inter, Poppins, Jakarta, Outfit, Roboto).
+
+## Palette (jetons CSS uniquement, jamais de hex dans le HTML)
+
+| Rôle | Jeton | Hex |
+| Fond | `--bg` | `#fcf6ec` |
+| Texte | `--ink` | `#2d1d14` |
+| Carte | `--paper` | `#fffdf7` |
+| Action | `--accent` | `#ae5528` |
+| Sur action | `--primary-fg` | `#fdfaf3` |
+| Citation | `--secondary` | `#f3e6d2` |
+| Numéros 01 02 03 | `--wheat` | `#e9ca89` |
+| Bande sombre | `--crust` / `--crust-fg` | `#352118` / `#f6ede0` |
+| Discret | `--muted` | `#715f53` |
+| Filets | `--line` | `#e1d6c6` |
+
+Pas de `#fff`, `#000`, violet, indigo, bleu, ni dégradé.
+
+## Usages
+
+- Terracotta rare : boutons, liens, accents de titre. Pas de grandes surfaces.
+- Une seule bande `--crust` par page : la section problèmes.
+- Blond `--wheat` uniquement sur les numéros d’étapes.
+
+## Mise en page
+
+Conteneur `72rem`, gouttière `20px`, sections `64px` de padding. Cartes `border-radius: 1rem`, `shadow-sm`. Boutons pilules `border-radius: 999px`. Séparer par l’espace, pas par un trait épais. Photos produits en carré, grille de 4, sans légende décorative.

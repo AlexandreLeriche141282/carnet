@@ -12,6 +12,7 @@
     ".path li",
     ".split-card",
     ".shot",
+    ".product-grid",
     ".plan",
     ".faq details",
     ".qr-stage",
