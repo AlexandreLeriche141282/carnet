@@ -1371,6 +1371,7 @@ a {
   html.nav-open,
   body.nav-open {
     overflow: hidden;
+    overflow-x: hidden;
   }
 
   body.nav-open {
@@ -1431,7 +1432,9 @@ a {
     position: fixed;
     inset: 0;
     z-index: 1;
-    width: auto;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
     background: var(--bg);
     clip-path: inset(0 0 100% 0);
     visibility: hidden;
@@ -1453,10 +1456,13 @@ a {
   .nav-panel {
     display: flex;
     flex-direction: column;
+    flex-wrap: nowrap;
     justify-content: space-between;
     gap: 28px;
     height: 100%;
+    max-width: 100%;
     padding: 88px 8px 28px;
+    overflow-x: hidden;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
   }
@@ -1464,8 +1470,12 @@ a {
   .nav-links {
     display: flex;
     flex-direction: column;
+    flex-wrap: nowrap;
     align-items: stretch;
     gap: 2px;
+    width: 100%;
+    min-width: 0;
+    flex-shrink: 0;
   }
 
   .nav-links a {
@@ -1504,7 +1514,11 @@ a {
   .nav-extra {
     display: flex;
     flex-direction: column;
+    flex-wrap: nowrap;
     gap: 14px;
+    width: 100%;
+    min-width: 0;
+    flex-shrink: 0;
     padding: 0 12px 8px;
     opacity: 0;
     transform: translateY(16px);
