@@ -8,8 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=58">
-  <script src="motion.js?v=2"></script>
+  <link rel="stylesheet" href="styles.css?v=78">
+  <script src="motion.js?v=8"></script>
 </head>
 <body class="site">
   <header class="mast">
@@ -23,8 +23,8 @@
           <div class="nav-links">
             <a href="#quoi">C’est quoi</a>
             <a href="#marche">Comment ça marche</a>
-            <a class="is-act" href="#essai">Essayer</a>
             <a href="#tarifs">Tarifs</a>
+            <a class="btn btn-fill nav-cta" href="#essai">Essayer</a>
           </div>
           <div class="nav-extra">
             <p class="nav-pitch">Le cahier de commandes de la boutique.<br>Lisible pour le labo.</p>
@@ -51,6 +51,7 @@
           </div>
         </div>
       </nav>
+      <a class="btn btn-fill mast-cta" href="#essai">Essayer</a>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Ouvrir le menu">
         <span></span>
       </button>
@@ -62,7 +63,11 @@
       <div>
         <p class="badge">Pour boulangers-pâtissiers</p>
         <h1>Le cahier de commandes<br>de votre boutique,<br><em>enfin lisible.</em></h1>
-        <p class="lead">Vos clients commandent par QR code.<br>Le labo reçoit les totaux la veille.<br>Sans appli, sans site, sans caisse.</p>
+        <ul class="hero-points">
+          <li>Le client commande par QR code.</li>
+          <li>Le labo a les totaux la veille, à votre heure.</li>
+          <li>Pas d’appli. Le client paie en caisse.</li>
+        </ul>
         <div class="cta-row">
           <a class="btn btn-fill" href="commande.html">Tester la démo client</a>
           <a class="btn btn-line" href="patron.html">Voir le côté boulanger</a>
@@ -70,19 +75,27 @@
       </div>
       <div class="device-wrap">
         <div class="device">
-          <iframe src="commande.html" title="Ce que le client voit en scannant le QR" loading="lazy"></iframe>
+          <iframe src="commande.html" title="Ce que le client voit en scannant le QR code" loading="lazy"></iframe>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="trust">
+  <section class="stats" aria-label="En bref">
     <div class="wrap">
-      <ul class="trust-in">
-        <li>Pensé pour le labo</li>
-        <li>Sans engagement</li>
-        <li>Sans appli à installer</li>
-        <li>Le mail du labo, à votre heure</li>
+      <ul class="stats-in">
+        <li>
+          <strong>20 min</strong>
+          <span>à l’install, on pose le catalogue</span>
+        </li>
+        <li>
+          <strong>0</strong>
+          <span>logiciel à ouvrir le matin</span>
+        </li>
+        <li>
+          <strong>29,99 €</strong>
+          <span>par mois, sans engagement, sans frais de résiliation</span>
+        </li>
       </ul>
     </div>
   </section>
@@ -94,25 +107,16 @@
       <p class="intro">Carnet de commandes n’est pas une caisse, ni un click &amp; collect, ni un site vitrine.<br>C’est ce que vous prenez à l’avance, tous les jours : tartes, entremets, gâteaux, quiches, sandwiches.<br>Et aussi les fêtes : galettes, bûches, pièces montées.<br>Le pain du matin, vous n’y touchez pas.</p>
       <ol class="ledger">
         <li>
-          <span>01</span>
-          <div>
-            <h3>Un QR code au comptoir</h3>
-            <p>Le client scanne et commande.<br>Le même QR va aussi sur les réseaux, ou sur l’emballage.<br>Ceux qui préfèrent le téléphone ou le comptoir, la vendeuse les saisit pareil.<br>Un seul carnet.<br>Le téléphone reste.</p>
-          </div>
+          <h3>Un QR code au comptoir</h3>
+          <p>Le client scanne et commande.<br>Le même QR code va aussi sur les réseaux, ou sur l’emballage.<br>Ceux qui préfèrent le téléphone ou le comptoir, la vendeuse les saisit pareil.<br>Un seul carnet.<br>Le téléphone reste.</p>
         </li>
         <li>
-          <span>02</span>
-          <div>
-            <h3>Une liste pour le labo</h3>
-            <p>La veille, le chef reçoit les totaux, produit par produit.<br>L’heure du mail se paramètre selon votre convenance.<br>Il imprime, ou il ouvre le téléphone.<br>Il produit ça.<br>Rien d’autre.</p>
-          </div>
+          <h3>Une liste pour le labo</h3>
+          <p>La veille, le chef reçoit les totaux, produit par produit.<br>L’heure du mail se paramètre selon votre convenance.<br>Il imprime, ou il ouvre le téléphone.<br>Il produit ça.<br>Rien d’autre.</p>
         </li>
         <li>
-          <span>03</span>
-          <div>
-            <h3>Le retrait en boutique</h3>
-            <p>On encaisse au comptoir, on coche « récupéré ».<br>Le client vient chercher, comme aujourd’hui.</p>
-          </div>
+          <h3>Le retrait en boutique</h3>
+          <p>On encaisse au comptoir, on coche « récupéré ».<br>Le client vient chercher, comme aujourd’hui.</p>
         </li>
       </ol>
     </div>
@@ -144,12 +148,12 @@
     <div class="wrap">
       <p class="eyebrow-pro">Trois pages, trois adresses</p>
       <h2>Le concept.<br>Le client.<br>Le boulanger.</h2>
-      <p class="intro">Ce n’est pas un seul site pour tout le monde.<br>Le QR ne mène pas au carnet.<br>Le carnet demande un code PIN.</p>
+      <p class="intro">Ce n’est pas un seul site pour tout le monde.<br>Le QR code ne mène pas au carnet.<br>Le carnet demande un code PIN.</p>
       <div class="split">
         <article class="split-card">
           <p class="split-kicker">Page publique</p>
           <h3>Le client commande tout seul</h3>
-          <p>C’est le QR du comptoir.<br>Le même, sur les réseaux ou sur l’emballage.<br>Plusieurs produits, un panier.<br>Puis un jour, une heure, un nom, un téléphone.<br>Pas de mot de passe.<br>Pas accès aux commandes des autres.</p>
+          <p>C’est le QR code du comptoir.<br>Le même, sur les réseaux ou sur l’emballage.<br>Plusieurs produits, un panier.<br>Puis un jour, une heure, un nom, un téléphone.<br>Pas de mot de passe.<br>Pas accès aux commandes des autres.</p>
           <ul class="ticks">
             <li>Votre catalogue, pas le nôtre</li>
             <li>Paiement en boutique, au retrait</li>
@@ -181,20 +185,23 @@
         <li>
           <span>01</span>
           <div>
+            <p class="step-time">20 min, une fois</p>
             <h3>On saisit votre catalogue</h3>
-            <p>Vingt minutes à l’install.<br>Ce que vous vendez à l’avance entre dans le QR.<br>Un nouveau parfum ?<br>Un message, on le met.<br>Vous n’ouvrez pas un logiciel.</p>
+            <p>Ce que vous vendez à l’avance entre dans le QR code.<br>Un nouveau parfum ?<br>Un message, on le met.<br>Vous n’ouvrez pas un logiciel.</p>
           </div>
         </li>
         <li>
           <span>02</span>
           <div>
+            <p class="step-time">Le client scanne</p>
             <h3>Le QR code reste au comptoir</h3>
-            <p>Et aussi sur les réseaux, ou sur l’emballage.<br>Le client scanne.<br>La vendeuse tape.<br>Une seule liste.<br>Le téléphone, le pain du matin, la caisse : on n’y touche pas.</p>
+            <p>Et aussi sur les réseaux, ou sur l’emballage.<br>La vendeuse tape les appels dans le même carnet.<br>Une seule liste.<br>Le téléphone, le pain du matin, la caisse : on n’y touche pas.</p>
           </div>
         </li>
         <li>
           <span>03</span>
           <div>
+            <p class="step-time">Le matin, la feuille</p>
             <h3>Le labo produit la liste</h3>
             <p>Le mail, à l’heure que vous paramétrez.<br>Feuille le matin.<br>Retrait en boutique.</p>
           </div>
@@ -209,10 +216,18 @@
       <h2>Ce que vous vendez tous les jours.<br>Et aussi les fêtes.</h2>
       <p class="intro">On le tient avec vous.<br>Le quotidien d’abord : tartes, gâteaux, quiches, entremets.<br>Les pics ensuite : galettes, bûches, pièces montées.<br>Le pain du matin, la caisse : on n’y touche pas.</p>
       <div class="product-grid">
-        <img src="assets/tarte_citron_meringue.webp?v=2" alt="Tarte citron meringuée">
-        <img src="assets/tarte-aux-fraises.png" alt="Tarte aux fraises">
-        <img src="assets/tarte-aux-pommes.webp?v=1" alt="Tarte aux pommes">
-        <img src="assets/buche-marron.webp" alt="Bûche de fête">
+        <figure>
+          <img src="assets/tarte_citron_meringue.webp?v=2" alt="Tarte citron meringuée">
+        </figure>
+        <figure>
+          <img src="assets/tarte-aux-fraises.png" alt="Tarte aux fraises">
+        </figure>
+        <figure>
+          <img src="assets/tarte-aux-pommes.webp?v=1" alt="Tarte aux pommes">
+        </figure>
+        <figure>
+          <img src="assets/buche-marron.webp" alt="Bûche de fête">
+        </figure>
       </div>
     </div>
   </section>
@@ -226,7 +241,7 @@
         <div>
           <p class="eyebrow-pro">Au comptoir</p>
           <h3 class="qr-title">Scannez.<br>C’est ce que le client voit.</h3>
-          <p class="intro">Le même QR que Léonard collerait près de la caisse.<br>Le même, sur les réseaux ou sur l’emballage.<br>Rien n’est débité.</p>
+          <p class="intro">Le même QR code que Léonard collerait près de la caisse.<br>Le même, sur les réseaux ou sur l’emballage.<br>Rien n’est débité.</p>
           <a class="btn btn-line" href="qr.html">Affiche à imprimer</a>
         </div>
         <figure class="qr-card">
@@ -258,7 +273,7 @@
           <div>
             <h3>Le QR code du comptoir</h3>
             <p>À imprimer et coller.<br>À poster sur les réseaux.<br>À mettre sur l’emballage.<br>En vrai, c’est ça que le client scanne — pas le carnet.</p>
-            <p class="card-cta"><a href="qr.html">Voir le QR</a></p>
+            <p class="card-cta"><a href="qr.html">Voir le QR code</a></p>
           </div>
         </li>
       </ol>
@@ -269,22 +284,35 @@
   <section class="block" id="tarifs">
     <div class="wrap">
       <p class="eyebrow-pro">Tarifs</p>
-      <h2>Un mois offert.<br>Ensuite, 39&nbsp;€ par mois.</h2>
-      <p class="intro">Le premier mois est gratuit.<br>Après, 39&nbsp;€ par mois, sans engagement.<br>Vous arrêtez quand vous voulez, sans frais.</p>
+      <h2>Un mois offert.<br>Ensuite, 29,99&nbsp;€ par mois.</h2>
+      <p class="intro">Le premier mois est gratuit.<br>Après, 29,99&nbsp;€ par mois.<br>Sans engagement.<br>Sans frais de résiliation.</p>
       <div class="grid-2">
         <article class="card plan is-hot">
           <p class="plan-flag">Pour commencer</p>
           <h3>1 mois offert</h3>
           <p class="amount">0&nbsp;€</p>
           <p>On installe vos produits et vos tarifs.<br>Vous essayez.<br>Rien à payer le premier mois.</p>
+          <ul class="ticks">
+            <li>On pose le catalogue avec vous</li>
+            <li>Démo en deux minutes</li>
+            <li>Vous arrêtez si ça ne sert pas</li>
+          </ul>
         </article>
         <article class="card plan">
           <h3>Ensuite</h3>
-          <p class="amount">39&nbsp;€ <span>/ mois</span></p>
-          <p>Tartes, gâteaux, commandes du week-end.<br>Résiliable à tout moment, sans frais.</p>
+          <p class="amount">29,99&nbsp;€ <span>/ mois</span></p>
+          <p>Tartes, gâteaux, commandes du week-end.<br>Sans engagement.<br>Sans frais de résiliation.</p>
+          <ul class="ticks">
+            <li>Votre catalogue, dans le QR code</li>
+            <li>Comptoir, réseaux, emballage</li>
+            <li>Le mail du labo, à votre heure</li>
+            <li>Code PIN pour le boulanger</li>
+            <li>Sans engagement</li>
+            <li>Sans frais de résiliation</li>
+          </ul>
         </article>
       </div>
-      <p class="plan-promise">Le premier mois est offert.<br><em>Ensuite, vous arrêtez quand vous voulez, sans frais.</em></p>
+      <p class="plan-promise">Le premier mois est offert.<br><em>Sans engagement. Sans frais de résiliation.</em></p>
     </div>
   </section>
 
@@ -302,7 +330,7 @@
       </details>
       <details>
         <summary>Je peux arrêter quand je veux&nbsp;?</summary>
-        <p>Oui.<br>L’abonnement se résilie à tout moment, sans frais.<br>Pas d’engagement, pas de préavis pénalisant.</p>
+        <p>Oui.<br>Sans engagement.<br>Sans frais de résiliation.<br>Vous arrêtez quand vous voulez, sans préavis pénalisant.</p>
       </details>
       <details>
         <summary>L’acompte est obligatoire&nbsp;?</summary>
@@ -314,11 +342,11 @@
       </details>
       <details>
         <summary>C’est une appli à télécharger&nbsp;?</summary>
-        <p>Non.<br>Le client scanne le QR, sans code.<br>Le boulanger ouvre une autre adresse, avec un PIN.<br>Rien à installer sur le téléphone de l’équipe.</p>
+        <p>Non.<br>Le client scanne le QR code, sans code.<br>Le boulanger ouvre une autre adresse, avec un PIN.<br>Rien à installer sur le téléphone de l’équipe.</p>
       </details>
       <details>
         <summary>Le client peut voir mes commandes&nbsp;?</summary>
-        <p>Non.<br>Le QR ouvre seulement la page pour commander.<br>Le carnet du boulanger est une autre adresse, derrière un code PIN.</p>
+        <p>Non.<br>Le QR code ouvre seulement la page pour commander.<br>Le carnet du boulanger est une autre adresse, derrière un code PIN.</p>
       </details>
       <details>
         <summary>Je fonctionne très bien avec mon carnet.</summary>
@@ -326,11 +354,11 @@
       </details>
       <details>
         <summary>Mes clients préfèrent téléphoner.</summary>
-        <p>Ils peuvent.<br>Le QR est un canal de plus, pour ceux qui ne veulent pas attendre ou déranger.<br>La vendeuse saisit aussi les appels dans le même carnet.</p>
+        <p>Ils peuvent.<br>Le QR code est un canal de plus, pour ceux qui ne veulent pas attendre ou déranger.<br>La vendeuse saisit aussi les appels dans le même carnet.</p>
       </details>
       <details>
         <summary>Je n’ai pas le temps d’apprendre un logiciel.</summary>
-        <p>Vous n’ouvrez pas un logiciel.<br>On installe vos produits et vos tarifs avec vous (20 min).<br>Ensuite : un QR pour le client, un code PIN pour le boulanger.</p>
+        <p>Vous n’ouvrez pas un logiciel.<br>On installe vos produits et vos tarifs avec vous (20 min).<br>Ensuite : un QR code pour le client, un code PIN pour le boulanger.</p>
       </details>
       <details>
         <summary>Et si mes clients ne l’utilisent pas&nbsp;?</summary>
@@ -345,7 +373,7 @@
       <h2>On installe vos produits et vos tarifs.<br>Avec photo, ou sans.</h2>
       <p>Si le chef imprime sa liste tout seul le matin, on continue.<br>Sinon, on arrête — sans frais, sans engagement.<br>Le but : plus de temps pour les clients, les produits, le métier — pas un logiciel de plus.</p>
       <div class="cta-row contact-cta">
-        <a class="btn btn-fill" href="commande.html">Page client (QR)</a>
+        <a class="btn btn-fill" href="commande.html">Page client (QR code)</a>
         <a class="btn btn-line" href="patron.html">Page boulanger (code)</a>
       </div>
       <div class="contact-box">
@@ -368,10 +396,8 @@
       const src =
         "https://api.qrserver.com/v1/create-qr-code/?size=280x280&margin=8&data=" +
         encodeURIComponent(url);
-      ["site-qr"].forEach((id) => {
-        const img = document.getElementById(id);
-        if (img) img.src = src;
-      });
+      const img = document.getElementById("site-qr");
+      if (img) img.src = src;
     })();
   </script>
 </body>

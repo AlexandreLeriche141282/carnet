@@ -237,6 +237,19 @@ a {
   color: var(--accent);
 }
 
+.nav .btn-fill,
+.mast-cta {
+  padding: 9px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-fg) !important;
+}
+
+.nav .btn-fill:hover,
+.mast-cta:hover {
+  color: var(--primary-fg) !important;
+}
+
 .btn {
   display: inline-flex;
   align-items: center;
@@ -286,6 +299,10 @@ a {
   background: transparent;
   border-color: var(--line);
   color: var(--ink) !important;
+}
+
+.btn.mast-cta {
+  display: none;
 }
 
 .hero-pro {
@@ -444,6 +461,33 @@ a {
   max-width: 28rem;
 }
 
+.hero-points {
+  margin: 22px 0 28px;
+  padding: 0;
+  list-style: none;
+  max-width: 32rem;
+}
+
+.hero-points li {
+  position: relative;
+  padding: 6px 0 6px 22px;
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.45;
+  color: var(--ink);
+}
+
+.hero-points li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 14px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
 .hero-note {
   margin: 16px 0 0;
   font-size: 14px;
@@ -572,6 +616,42 @@ a {
   left: -18px;
   color: var(--accent);
   font-style: normal;
+}
+
+.stats {
+  padding: 8px 0 24px;
+}
+
+.stats-in {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px 40px;
+  margin: 0;
+  padding: 8px 0 0;
+  list-style: none;
+}
+
+.stats-in li {
+  margin: 0;
+}
+
+.stats-in strong {
+  display: block;
+  margin: 0 0 10px;
+  font-family: var(--serif);
+  font-size: clamp(40px, 5vw, 56px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: var(--ink);
+}
+
+.stats-in span {
+  display: block;
+  max-width: 24ch;
+  font-size: 15px;
+  line-height: 1.45;
+  color: var(--muted);
 }
 
 .block {
@@ -811,6 +891,18 @@ a {
   font-size: 20px;
 }
 
+.steps .step-time {
+  display: inline-block;
+  margin: 0 0 10px;
+  padding: 4px 10px;
+  background: var(--secondary);
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--ink);
+}
+
 .ledger p,
 .faults p,
 .path p,
@@ -965,16 +1057,32 @@ a {
 
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.product-grid figure {
+  margin: 0;
+  aspect-ratio: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow: hidden;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow);
 }
 
 .product-grid img {
   display: block;
-  width: 100%;
-  aspect-ratio: 1;
-  object-fit: cover;
-  border-radius: var(--radius-card);
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
 }
 
 .shot {
@@ -1086,6 +1194,10 @@ a {
 
 .plan p {
   flex: 1;
+}
+
+.plan .ticks {
+  margin: 8px 0 0;
 }
 
 .plan-promise {
@@ -1312,12 +1424,30 @@ a {
   .ledger,
   .faults,
   .steps,
+  .stats-in,
   .trust-in {
     grid-template-columns: 1fr;
   }
 
+  .btn.mast-cta {
+    display: inline-flex;
+    position: relative;
+    z-index: 2;
+    padding: 8px 14px;
+    font-size: 13px;
+  }
+
+  body.nav-open .btn.mast-cta {
+    visibility: hidden;
+    pointer-events: none;
+  }
+
   .product-grid {
-    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .product-grid figure {
+    padding: 12px;
   }
 
   .device-wrap {
@@ -1507,7 +1637,10 @@ a {
   .nav-links .btn {
     width: 100%;
     margin-top: 14px;
+    padding: 14px 22px;
+    font-family: var(--sans);
     font-size: 16px;
+    font-weight: 600;
     letter-spacing: 0;
   }
 
@@ -2439,6 +2572,7 @@ html.in-frame .mast,
 .js-motion .ledger li,
 .js-motion .faults li,
 .js-motion .steps li,
+.js-motion .stats-in li,
 .js-motion .path li,
 .js-motion .split-card,
 .js-motion .shot,
@@ -2462,6 +2596,7 @@ html.in-frame .mast,
 .js-motion .ledger li:nth-child(2),
 .js-motion .faults li:nth-child(2),
 .js-motion .steps li:nth-child(2),
+.js-motion .stats-in li:nth-child(2),
 .js-motion .path li:nth-child(2),
 .js-motion .split-card:nth-child(2),
 .js-motion .shot:nth-child(2),
@@ -2473,6 +2608,7 @@ html.in-frame .mast,
 .js-motion .ledger li:nth-child(3),
 .js-motion .faults li:nth-child(3),
 .js-motion .steps li:nth-child(3),
+.js-motion .stats-in li:nth-child(3),
 .js-motion .path li:nth-child(3),
 .js-motion .faq details:nth-of-type(3) {
   transition-delay: 0.16s;
@@ -2545,6 +2681,7 @@ html.in-frame.js-motion .mast {
   .js-motion .ledger li,
   .js-motion .faults li,
   .js-motion .steps li,
+  .js-motion .stats-in li,
   .js-motion .path li,
   .js-motion .split-card,
   .js-motion .shot,

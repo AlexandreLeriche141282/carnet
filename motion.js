@@ -9,6 +9,7 @@
     ".ledger li",
     ".faults li",
     ".steps li",
+    ".stats-in li",
     ".path li",
     ".split-card",
     ".shot",
