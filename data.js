@@ -4,7 +4,7 @@ const CART_KEY = "leroy-panier-v2";
 const MAIL_SET_KEY = "leroy-mail-set-v1";
 const PATRON_AUTH_KEY = "leroy-patron-auth";
 const PATRON_PIN = "2010";
-const DEFAULT_LAB_MAIL = "contact@leonardd.fr";
+const DEFAULT_LAB_MAIL = "alexandre@pikcel.fr";
 const times = ["8h", "9h", "10h", "11h", "12h", "14h", "15h", "16h", "17h", "18h"];
 const PICKUP_DAYS = 21;
 
@@ -417,7 +417,7 @@ function loadMailSettings() {
   try {
     const saved = JSON.parse(raw);
     return {
-      to: isEmailOk(saved.to) ? saved.to.trim() : fallback.to,
+      to: isEmailOk(saved.to) && !isPlaceholderMail(saved.to) ? saved.to.trim() : fallback.to,
       hour: times.includes(saved.hour) ? saved.hour : fallback.hour,
     };
   } catch (err) {
@@ -481,6 +481,40 @@ function openMailto(to, subject, body) {
   document.body.appendChild(link);
   link.click();
   link.remove();
+}
+
+function isPlaceholderMail(value) {
+  const to = (value || "").trim().toLowerCase();
+  return to.endsWith("@leonardd.fr") || to.endsWith("@example.com") || to.endsWith("@carnet.fr");
+}
+
+function isLocalHost() {
+  const host = (window.location && window.location.hostname) || "";
+  return host === "127.0.0.1" || host === "localhost";
+}
+
+async function sendLabEmail(mail) {
+  if (isLocalHost()) {
+    throw new Error("localhost");
+  }
+  const res = await fetch("https://formsubmit.co/ajax/" + encodeURIComponent(mail.to), {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify({
+      _subject: mail.subject,
+      _template: "box",
+      _captcha: "false",
+      message: mail.body,
+    }),
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok || data.success === false || data.success === "false") {
+    throw new Error(data.message || "envoi impossible");
+  }
+  return data;
 }
 
 function patronUnlocked() {

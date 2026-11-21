@@ -158,16 +158,17 @@ document.getElementById("lab-hour").addEventListener("change", () => {
   });
 });
 
-document.getElementById("mail-form").addEventListener("submit", (e) => {
+document.getElementById("mail-form").addEventListener("submit", async (e) => {
   e.preventDefault();
   const to = document.getElementById("lab-mail").value.trim();
   const hour = document.getElementById("lab-hour").value;
   const err = document.getElementById("lab-mail-error");
   const mailEl = document.getElementById("lab-mail");
   const status = document.getElementById("mail-status");
+  const btn = e.target.querySelector("button[type='submit']");
 
-  if (!isEmailOk(to)) {
-    err.textContent = "Indiquez un mail valide.";
+  if (!isEmailOk(to) || isPlaceholderMail(to)) {
+    err.textContent = "Indiquez votre vrai mail, pour recevoir le récap.";
     mailEl.classList.add("is-bad");
     status.classList.add("hidden");
     return;
@@ -177,9 +178,19 @@ document.getElementById("mail-form").addEventListener("submit", (e) => {
   mailEl.classList.remove("is-bad");
   saveMailSettings({ to, hour });
   const mail = pushRecapMail(patronDate, to);
-  status.textContent = `Récap prêt pour ${mail.to}. Une copie est dans la boîte démo.`;
+  status.textContent = "Envoi du récap…";
   status.classList.remove("hidden");
-  openMailto(mail.to, mail.subject, mail.body);
+  if (btn) btn.disabled = true;
+
+  try {
+    await sendLabEmail(mail);
+    status.textContent = `Récap envoyé à ${mail.to}. Au premier essai, ouvrez le mail de confirmation, puis renvoyez. Regardez aussi les indésirables.`;
+  } catch (errSend) {
+    status.textContent = `Votre messagerie s’ouvre pour envoyer le récap à ${mail.to}. Cliquez sur Envoyer.`;
+    openMailto(mail.to, mail.subject, mail.body);
+  } finally {
+    if (btn) btn.disabled = false;
+  }
 });
 
 document.getElementById("lock-out").addEventListener("click", () => {

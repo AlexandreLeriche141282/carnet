@@ -107,7 +107,7 @@
         <form id="mail-form" novalidate>
           <p class="field-hint">Le chef reçoit les totaux, à l’heure que vous réglez.</p>
           <label for="lab-mail">Adresse du labo</label>
-          <input id="lab-mail" name="lab-mail" type="email" autocomplete="email" placeholder="contact@leonardd.fr" required>
+          <input id="lab-mail" name="lab-mail" type="email" autocomplete="email" placeholder="alexandre@pikcel.fr" required>
           <p class="field-error" id="lab-mail-error" role="alert"></p>
           <div class="row" style="margin-top:12px">
             <div>
@@ -115,10 +115,10 @@
               <select id="lab-hour" name="lab-hour"></select>
             </div>
           </div>
-          <p class="note">En boutique, ce mail part tout seul à l’heure choisie.<br>Ici, vous l’envoyez à la main : ça ouvre votre messagerie, et une copie s’affiche dans la boîte démo.</p>
+          <p class="note">Indiquez votre mail.<br>Le récap part vraiment, avec les quantités du jour.<br>Au premier envoi, un mail de confirmation arrive : cliquez le lien, puis renvoyez.</p>
           <button class="pay" type="submit" style="margin-top:14px">
             Envoyer le récap maintenant
-            <small>Ouvre le mail + copie dans la boîte démo</small>
+            <small>Vrai envoi vers l’adresse du labo</small>
           </button>
         </form>
         <p class="mail-ok hidden" id="mail-status" role="status"></p>
@@ -131,8 +131,8 @@
       </div>
     </main>
   </div>
-  <script src="data.js?v=8"></script>
-  <script src="patron.js?v=33"></script>
+  <script src="data.js?v=9"></script>
+  <script src="patron.js?v=34"></script>
   <script src="nav.js"></script>
 </body>
 </html>
