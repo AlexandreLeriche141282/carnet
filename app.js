@@ -222,12 +222,13 @@ function showOk(order) {
   `;
 }
 
-function placeOrder() {
+async function placeOrder() {
   if (!cart.items.length) {
     showView("form-view");
     return;
   }
   if (!validateCart()) return;
+  await ensureRemoteStore();
   cart.date = document.getElementById("pickup-date").value;
   cart.time = document.getElementById("pickup-time").value;
   const order = {
@@ -249,7 +250,7 @@ function placeOrder() {
   };
   const orders = loadOrders();
   orders.push(order);
-  saveOrders(orders);
+  await saveOrders(orders);
   pushOrderMail(order);
   clearCart();
   cart = emptyCart();
@@ -336,4 +337,4 @@ if (window.self !== window.top) {
 }
 
 renderChoices();
-loadOrders();
+ensureRemoteStore();

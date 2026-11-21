@@ -78,4 +78,4 @@ document.getElementById("lab-date").addEventListener("change", (e) => {
   render();
 });
 
-render();
+ensureRemoteStore().then(() => render());

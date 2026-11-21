@@ -327,17 +327,108 @@ function isPickupTimeOk(value) {
   return times.includes(value);
 }
 
+function storeConfig() {
+  const cfg = window.CARNET_STORE || {};
+  return {
+    url: (cfg.url || "").trim(),
+    key: (cfg.key || "").trim(),
+  };
+}
+
+function storeReady() {
+  return Boolean(storeConfig().url);
+}
+
+function snapshotStore(orders) {
+  return {
+    orders: Array.isArray(orders) ? orders : loadOrders(),
+    mail: loadMailSettings(),
+    recapSentOn: recapSentDay(),
+  };
+}
+
+let remoteReady = null;
+let remotePushChain = Promise.resolve();
+
+async function pullRemoteState() {
+  const { url } = storeConfig();
+  if (!url) return null;
+  const res = await fetch(url, { cache: "no-store" });
+  if (!res.ok) return null;
+  const data = await res.json();
+  return data && typeof data === "object" ? data : null;
+}
+
+async function pushRemoteState(state) {
+  const { url, key } = storeConfig();
+  if (!url) return;
+  const headers = { "Content-Type": "application/json" };
+  if (key) headers["X-Bin-Key"] = key;
+  const res = await fetch(url, {
+    method: "PUT",
+    headers,
+    body: JSON.stringify(state),
+  });
+  if (!res.ok) throw new Error("store");
+}
+
+function scheduleRemotePush(orders) {
+  if (!storeReady()) return Promise.resolve();
+  const snapshot = snapshotStore(orders);
+  remotePushChain = remotePushChain.then(() => pushRemoteState(snapshot)).catch(() => {});
+  return remotePushChain;
+}
+
+function applyRemoteState(data) {
+  if (Array.isArray(data.orders)) {
+    localStorage.setItem(KEY, JSON.stringify(data.orders));
+  }
+  if (data.mail && typeof data.mail === "object") {
+    const current = loadMailSettings();
+    localStorage.setItem(
+      MAIL_SET_KEY,
+      JSON.stringify({
+        to: isEmailOk(data.mail.to) && !isPlaceholderMail(data.mail.to) ? data.mail.to.trim() : current.to,
+        hour: times.includes(data.mail.hour) ? data.mail.hour : current.hour,
+      })
+    );
+  }
+  if (typeof data.recapSentOn === "string") {
+    localStorage.setItem(RECAP_SENT_KEY, data.recapSentOn);
+  }
+}
+
+async function hydrateFromRemote() {
+  if (!storeReady()) return false;
+  try {
+    const data = await pullRemoteState();
+    if (!data) return false;
+    applyRemoteState(data);
+    return true;
+  } catch (err) {
+    return false;
+  }
+}
+
+function ensureRemoteStore() {
+  if (!storeReady()) return Promise.resolve(false);
+  if (!remoteReady) remoteReady = hydrateFromRemote();
+  return remoteReady;
+}
+
 function loadOrders() {
   const raw = localStorage.getItem(KEY);
   if (!raw) {
-    localStorage.setItem(KEY, JSON.stringify(seed));
-    return seed.slice();
+    const starter = storeReady() ? [] : seed.slice();
+    localStorage.setItem(KEY, JSON.stringify(starter));
+    return starter.slice();
   }
   return JSON.parse(raw);
 }
 
 function saveOrders(orders) {
   localStorage.setItem(KEY, JSON.stringify(orders));
+  return scheduleRemotePush(orders);
 }
 
 function loadMails() {
@@ -428,6 +519,7 @@ function loadMailSettings() {
 
 function saveMailSettings(settings) {
   localStorage.setItem(MAIL_SET_KEY, JSON.stringify(settings));
+  scheduleRemotePush();
 }
 
 function recapPayload(date, to) {
@@ -519,6 +611,7 @@ function recapSentDay() {
 function markRecapSentToday() {
   try {
     localStorage.setItem(RECAP_SENT_KEY, todayIso());
+    scheduleRemotePush();
   } catch (err) {
     /* ignore */
   }
@@ -582,4 +675,11 @@ function resetDemo() {
   localStorage.removeItem(MAIL_SET_KEY);
   localStorage.removeItem(RECAP_SENT_KEY);
   lockPatron();
+  if (storeReady()) {
+    pushRemoteState({
+      orders: [],
+      mail: { to: DEFAULT_LAB_MAIL, hour: "18h" },
+      recapSentOn: "",
+    }).catch(() => {});
+  }
 }

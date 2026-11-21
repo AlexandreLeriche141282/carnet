@@ -20,9 +20,10 @@ function showLock() {
   pin.focus();
 }
 
-function showApp() {
+async function showApp() {
   document.getElementById("patron-lock").classList.add("hidden");
   document.getElementById("patron-app").classList.remove("hidden");
+  await ensureRemoteStore();
   initMailForm();
   render();
   startAutoRecap();
@@ -45,10 +46,10 @@ function updateAutoMailNote() {
     return;
   }
   if (recapAlreadySentToday()) {
-    el.innerHTML = `Le récap automatique du jour est déjà parti, à ${hour}.<br>Prochain envoi : demain, à ${hour}.`;
+    el.innerHTML = `Le récap automatique du jour est déjà parti, à ${hour}.<br>Prochain envoi : demain, à ${hour}, même si cet onglet est fermé.`;
     return;
   }
-  el.innerHTML = `Un seul mail automatique par jour, à ${hour}.<br>Laissez cet onglet ouvert. L’ordinateur ne doit pas s’endormir.`;
+  el.innerHTML = `Un seul mail automatique par jour, à ${hour}, même si cet onglet est fermé.<br>Il part pour les retraits du lendemain.`;
 }
 
 async function tryAutoSendRecap() {
