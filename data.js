@@ -2,6 +2,7 @@ const KEY = "leroy-commandes-v5";
 const MAIL_KEY = "leroy-mails-v2";
 const CART_KEY = "leroy-panier-v2";
 const MAIL_SET_KEY = "leroy-mail-set-v1";
+const RECAP_SENT_KEY = "carnet-recap-sent-v1";
 const PATRON_AUTH_KEY = "leroy-patron-auth";
 const PATRON_PIN = "2010";
 const DEFAULT_LAB_MAIL = "alexandre@pikcel.fr";
@@ -488,33 +489,66 @@ function isPlaceholderMail(value) {
   return to.endsWith("@leonardd.fr") || to.endsWith("@example.com") || to.endsWith("@carnet.fr");
 }
 
-function isLocalHost() {
-  const host = (window.location && window.location.hostname) || "";
-  return host === "127.0.0.1" || host === "localhost";
+function emailjsConfig() {
+  const cfg = window.CARNET_EMAILJS || {};
+  return {
+    publicKey: (cfg.publicKey || "").trim(),
+    serviceId: (cfg.serviceId || "").trim(),
+    templateId: (cfg.templateId || "").trim(),
+  };
+}
+
+function emailjsReady() {
+  const cfg = emailjsConfig();
+  return Boolean(window.emailjs && cfg.publicKey && cfg.serviceId && cfg.templateId);
+}
+
+function hourLabelToMinutes(hour) {
+  const n = parseInt(String(hour || "").replace("h", ""), 10);
+  return Number.isFinite(n) ? n * 60 : 18 * 60;
+}
+
+function recapSentDay() {
+  try {
+    return localStorage.getItem(RECAP_SENT_KEY) || "";
+  } catch (err) {
+    return "";
+  }
+}
+
+function markRecapSentToday() {
+  try {
+    localStorage.setItem(RECAP_SENT_KEY, todayIso());
+  } catch (err) {
+    /* ignore */
+  }
+}
+
+function recapAlreadySentToday() {
+  return recapSentDay() === todayIso();
+}
+
+function shouldAutoSendRecap() {
+  if (!emailjsReady() || recapAlreadySentToday()) return false;
+  const settings = loadMailSettings();
+  if (!isEmailOk(settings.to) || isPlaceholderMail(settings.to)) return false;
+  const now = new Date();
+  const nowMin = now.getHours() * 60 + now.getMinutes();
+  return nowMin >= hourLabelToMinutes(settings.hour);
 }
 
 async function sendLabEmail(mail) {
-  if (isLocalHost()) {
-    throw new Error("localhost");
+  const cfg = emailjsConfig();
+  if (!emailjsReady()) throw new Error("emailjs");
+  if (!window.__carnetEmailjsInit) {
+    window.emailjs.init({ publicKey: cfg.publicKey });
+    window.__carnetEmailjsInit = true;
   }
-  const res = await fetch("https://formsubmit.co/ajax/" + encodeURIComponent(mail.to), {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-    },
-    body: JSON.stringify({
-      _subject: mail.subject,
-      _template: "box",
-      _captcha: "false",
-      message: mail.body,
-    }),
+  await window.emailjs.send(cfg.serviceId, cfg.templateId, {
+    to_email: mail.to,
+    subject: mail.subject,
+    message: mail.body,
   });
-  const data = await res.json().catch(() => ({}));
-  if (!res.ok || data.success === false || data.success === "false") {
-    throw new Error(data.message || "envoi impossible");
-  }
-  return data;
 }
 
 function patronUnlocked() {
@@ -546,5 +580,6 @@ function resetDemo() {
   localStorage.removeItem(MAIL_KEY);
   localStorage.removeItem(CART_KEY);
   localStorage.removeItem(MAIL_SET_KEY);
+  localStorage.removeItem(RECAP_SENT_KEY);
   lockPatron();
 }

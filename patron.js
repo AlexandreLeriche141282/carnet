@@ -1,6 +1,8 @@
 let patronDate = tomorrowIso();
 let pendingDelete = null;
 let mailReady = false;
+let autoSendBusy = false;
+let autoSendTimer = null;
 
 function weekdayShort(iso) {
   return new Date(`${iso}T12:00:00`).toLocaleDateString("fr-FR", { weekday: "short" }).replace(".", "");
@@ -23,6 +25,53 @@ function showApp() {
   document.getElementById("patron-app").classList.remove("hidden");
   initMailForm();
   render();
+  startAutoRecap();
+}
+
+function setMailStatus(text) {
+  const status = document.getElementById("mail-status");
+  if (!status) return;
+  status.textContent = text;
+  status.classList.toggle("hidden", !text);
+}
+
+function updateAutoMailNote() {
+  const el = document.getElementById("auto-mail-note");
+  const hourEl = document.getElementById("lab-hour");
+  if (!el || !hourEl) return;
+  const hour = hourEl.value;
+  if (!emailjsReady()) {
+    el.innerHTML = "L’envoi EmailJS n’est pas encore réglé.<br>Le bouton ouvre la messagerie en attendant.";
+    return;
+  }
+  if (recapAlreadySentToday()) {
+    el.innerHTML = `Le récap automatique du jour est déjà parti, à ${hour}.<br>Prochain envoi : demain, à ${hour}.`;
+    return;
+  }
+  el.innerHTML = `Un seul mail automatique par jour, à ${hour}.<br>Laissez cet onglet ouvert. L’ordinateur ne doit pas s’endormir.`;
+}
+
+async function tryAutoSendRecap() {
+  if (autoSendBusy || !patronUnlocked() || !shouldAutoSendRecap()) return;
+  autoSendBusy = true;
+  const settings = loadMailSettings();
+  try {
+    const mail = pushRecapMail(tomorrowIso(), settings.to);
+    await sendLabEmail(mail);
+    markRecapSentToday();
+    setMailStatus(`Récap automatique parti à ${settings.to}, pour ${formatDateFr(mail.date)}.`);
+    updateAutoMailNote();
+  } catch (err) {
+    setMailStatus("L’envoi automatique n’est pas passé. Réessayez avec le bouton, ou plus tard.");
+  } finally {
+    autoSendBusy = false;
+  }
+}
+
+function startAutoRecap() {
+  tryAutoSendRecap();
+  if (autoSendTimer) return;
+  autoSendTimer = setInterval(tryAutoSendRecap, 30000);
 }
 
 function renderWeek() {
@@ -51,9 +100,14 @@ function initMailForm() {
   const settings = loadMailSettings();
   const hourEl = document.getElementById("lab-hour");
   hourEl.innerHTML = times.map((t) => `<option value="${t}">${t}</option>`).join("");
-  hourEl.value = settings.hour;
+  hourEl.value = settings.hour || "18h";
   document.getElementById("lab-mail").value = settings.to;
+  saveMailSettings({
+    to: isEmailOk(settings.to) ? settings.to : loadMailSettings().to,
+    hour: hourEl.value,
+  });
   mailReady = true;
+  updateAutoMailNote();
 }
 
 function render() {
@@ -156,6 +210,7 @@ document.getElementById("lab-hour").addEventListener("change", () => {
     to: isEmailOk(to) ? to : loadMailSettings().to,
     hour: document.getElementById("lab-hour").value,
   });
+  updateAutoMailNote();
 });
 
 document.getElementById("mail-form").addEventListener("submit", async (e) => {
@@ -178,15 +233,15 @@ document.getElementById("mail-form").addEventListener("submit", async (e) => {
   mailEl.classList.remove("is-bad");
   saveMailSettings({ to, hour });
   const mail = pushRecapMail(patronDate, to);
-  status.textContent = "Envoi du récap…";
-  status.classList.remove("hidden");
+  setMailStatus("Envoi du récap…");
   if (btn) btn.disabled = true;
 
   try {
     await sendLabEmail(mail);
-    status.textContent = `Récap envoyé à ${mail.to}. Au premier essai, ouvrez le mail de confirmation, puis renvoyez. Regardez aussi les indésirables.`;
+    setMailStatus(`Récap envoyé à ${mail.to} via EmailJS.`);
+    updateAutoMailNote();
   } catch (errSend) {
-    status.textContent = `Votre messagerie s’ouvre pour envoyer le récap à ${mail.to}. Cliquez sur Envoyer.`;
+    setMailStatus(`Votre messagerie s’ouvre pour envoyer le récap à ${mail.to}. Cliquez sur Envoyer.`);
     openMailto(mail.to, mail.subject, mail.body);
   } finally {
     if (btn) btn.disabled = false;

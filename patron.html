@@ -105,7 +105,7 @@
       <section>
         <h2>Mail du labo</h2>
         <form id="mail-form" novalidate>
-          <p class="field-hint">Le chef reçoit les totaux, à l’heure que vous réglez.</p>
+          <p class="field-hint">Le chef reçoit les totaux une fois par jour, à l’heure choisie.</p>
           <label for="lab-mail">Adresse du labo</label>
           <input id="lab-mail" name="lab-mail" type="email" autocomplete="email" placeholder="alexandre@pikcel.fr" required>
           <p class="field-error" id="lab-mail-error" role="alert"></p>
@@ -115,10 +115,10 @@
               <select id="lab-hour" name="lab-hour"></select>
             </div>
           </div>
-          <p class="note">Indiquez votre mail.<br>Le récap part vraiment, avec les quantités du jour.<br>Au premier envoi, un mail de confirmation arrive : cliquez le lien, puis renvoyez.</p>
+          <p class="note" id="auto-mail-note">Un seul envoi automatique par jour, à l’heure choisie.<br>Le carnet doit être ouvert à cette heure-là.</p>
           <button class="pay" type="submit" style="margin-top:14px">
             Envoyer le récap maintenant
-            <small>Vrai envoi vers l’adresse du labo</small>
+            <small>Envoi EmailJS vers l’adresse du labo</small>
           </button>
         </form>
         <p class="mail-ok hidden" id="mail-status" role="status"></p>
@@ -131,8 +131,10 @@
       </div>
     </main>
   </div>
-  <script src="data.js?v=9"></script>
-  <script src="patron.js?v=34"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script src="email-config.js"></script>
+  <script src="data.js?v=11"></script>
+  <script src="patron.js?v=36"></script>
   <script src="nav.js"></script>
 </body>
 </html>
