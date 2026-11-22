@@ -8,8 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=82">
-  <script src="motion.js?v=9"></script>
+  <link rel="stylesheet" href="styles.css?v=89">
+  <script src="motion.js?v=12"></script>
 </head>
 <body class="site home">
   <header class="mast topbar">
@@ -22,6 +22,7 @@
         <a href="#fonctionnement">Comment ça marche</a>
         <a href="#demo">Démo</a>
         <a href="#tarif">Tarif</a>
+        <a href="#faq">FAQ</a>
         <a class="btn btn-fill nav-cta" href="#contact">Essayer</a>
       </nav>
       <a class="btn btn-fill mast-cta" href="#contact">Essayer</a>
@@ -111,32 +112,32 @@
           <span>01</span>
           <div>
             <h3>Le client scanne</h3>
-            <p>Un QR code au comptoir, sur vos réseaux ou vos emballages.<br>Ceux qui téléphonent, la vendeuse les note dans le même carnet.</p>
+            <p>Un QR code en boutique, sur vos réseaux, vos emballages ou vos cartes de visite.<br>Ceux qui téléphonent, la vendeuse les note dans le même carnet.</p>
           </div>
         </li>
         <li class="step">
           <span>02</span>
           <div>
             <h3>Les quantités à préparer</h3>
-            <p>La veille, à l’heure que vous choisissez : les totaux, produit par produit.<br>On l’imprime ou on la lit sur le téléphone.</p>
+            <p>La veille, à l’heure que vous choisissez : vous recevez un mail unique, le récap des commandes.</p>
           </div>
         </li>
         <li class="step">
           <span>03</span>
           <div>
             <h3>Le client récupère</h3>
-            <p>Il paie au comptoir, comme aujourd’hui.<br>La vendeuse coche « récupéré ».</p>
+            <p>Paiement au retrait de la commande.<br>La vendeuse coche « récupéré ».</p>
           </div>
         </li>
       </ol>
-      <p class="home-aside">Ce n’est <strong>ni une caisse, ni un site de vente en ligne</strong>.<br>Le pain du matin et votre caisse ne changent pas.</p>
+      <p class="home-aside">Ce n’est <strong>ni une caisse, ni un site de vente en ligne</strong>.<br>Rien ne change en boutique.</p>
     </div>
   </section>
 
   <section class="block home-band" id="catalogue">
     <div class="wrap">
       <h2 class="section-title">Les commandes à préparer à l’avance.</h2>
-      <p class="intro">Tartes, entremets, quiches toute l’année, et galettes, bûches ou pièces montées pendant les fêtes.<br>On installe votre catalogue avec vous.<br>Un nouveau parfum ? On l’ajoute ensemble.</p>
+      <p class="intro">Tartes, entremets, quiches toute l’année, et galettes, bûches ou pièces montées pendant les fêtes.<br>Vous nous indiquez les produits, les prix, et les photos si vous le souhaitez.<br>On s’occupe de tout le reste : le catalogue, le QR code, la mise en place.</p>
       <div class="product-grid">
         <figure>
           <img src="assets/tarte_citron_meringue.webp?v=2" alt="Tarte citron meringuée">
@@ -187,24 +188,106 @@
         <ul class="ticks">
           <li>Installation du catalogue avec vous</li>
           <li>QR code à imprimer</li>
-          <li>Mail du labo à votre heure</li>
+          <li>Mail de production à l’heure définie</li>
         </ul>
       </article>
     </div>
   </section>
 
-  <section class="block home-contact" id="contact">
+  <section class="block" id="faq">
     <div class="wrap">
-      <h2 class="section-title">On s’occupe de l’installation.</h2>
-      <p class="intro">On prend vos produits et on prépare le carnet ensemble.</p>
-      <a class="btn btn-fill btn-main" href="mailto:alexandre@pikcel.fr?subject=Carnet%20de%20commandes%20boulangerie">Je veux essayer</a>
+      <h2 class="section-title">Les questions fréquentes.</h2>
+      <p class="intro">Ce qu’on nous demande le plus souvent.</p>
+      <div class="faq home-faq">
+        <details name="carnet-faq">
+          <summary>C’est une caisse, ou un click &amp; collect ?</summary>
+          <p>Non.<br>Le pain du matin et votre caisse ne changent pas.<br>C’est le cahier des commandes à préparer à l’avance.</p>
+        </details>
+        <details name="carnet-faq">
+          <summary>Comment le client commande-t-il ?</summary>
+          <p>Il scanne un QR code au comptoir, sur vos réseaux ou vos emballages.<br>Il choisit, il indique le jour de retrait, c’est noté.</p>
+        </details>
+        <details name="carnet-faq">
+          <summary>Et ceux qui téléphonent encore ?</summary>
+          <p>La vendeuse les note dans le même carnet.<br>Tout arrive au même endroit.</p>
+        </details>
+        <details name="carnet-faq">
+          <summary>Quand est-ce que je reçois les commandes ?</summary>
+          <p>Un mail de production, une fois par jour, à l’heure que vous définissez.<br>La veille, pour le lendemain, adaptable à votre jour de fermeture.</p>
+        </details>
+        <details name="carnet-faq">
+          <summary>Le client paie-t-il en ligne ?</summary>
+          <p>Non.<br>Il paie sur place, le jour du retrait.</p>
+        </details>
+        <details name="carnet-faq">
+          <summary>Y a-t-il un engagement ?</summary>
+          <p>Non.<br>1 mois offert, puis 29,99&nbsp;€ par mois.<br>Sans frais de résiliation.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="block home-contact" id="contact">
+    <div class="wrap home-contact-grid">
+      <div class="home-contact-copy">
+        <h2 class="section-title">Parlons de votre boutique.</h2>
+        <div class="home-contact-text">
+          <p>Vous avez une question ?<br>Vous voulez essayer, ou simplement comprendre comment le carnet pourrait automatiser la prise de commande ?</p>
+          <p>Laissez vos coordonnées.<br>On vous rappelle pour parler de vos produits, des commandes du week-end, et de l’heure à laquelle les commandes vous sont transmises.<br>On vous dit clairement si ça vous convient, sans engagement.</p>
+        </div>
+      </div>
+      <div>
+      <form class="paper home-lead" id="lead-form" novalidate>
+        <div class="hp" aria-hidden="true">
+          <label for="lead-website">Site web</label>
+          <input id="lead-website" name="website" type="text" tabindex="-1" autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="lead-name">Votre nom</label>
+          <input id="lead-name" name="name" type="text" autocomplete="name" required>
+          <p class="field-error" id="lead-name-error" role="alert"></p>
+        </div>
+        <div class="field">
+          <label for="lead-shop">Boulangerie</label>
+          <input id="lead-shop" name="shop" type="text" autocomplete="organization" required>
+          <p class="field-error" id="lead-shop-error" role="alert"></p>
+        </div>
+        <div class="field">
+          <label for="lead-phone">Téléphone</label>
+          <input id="lead-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required>
+          <p class="field-error" id="lead-phone-error" role="alert"></p>
+        </div>
+        <div class="field">
+          <label for="lead-mail">Mail</label>
+          <input id="lead-mail" name="email" type="email" autocomplete="email" required>
+          <p class="field-error" id="lead-mail-error" role="alert"></p>
+        </div>
+        <div class="field">
+          <label for="lead-city">Ville <span class="optional">facultatif</span></label>
+          <input id="lead-city" name="city" type="text" autocomplete="address-level2">
+        </div>
+        <div class="field">
+          <label for="lead-message">Message <span class="optional">facultatif</span></label>
+          <textarea id="lead-message" name="message" rows="4" maxlength="1000" autocomplete="off"></textarea>
+        </div>
+        <button class="btn btn-fill btn-main" type="submit">Je veux essayer</button>
+        <p class="home-lead-status hidden" id="lead-status" role="status"></p>
+      </form>
+      <div class="paper home-lead home-lead-ok hidden" id="lead-thanks">
+        <p class="eyebrow">C’est noté</p>
+        <p class="home-lead-title">On vous rappelle.</p>
+        <p>Merci. On vous rappelle pour en discuter, sans engagement.</p>
+      </div>
+      </div>
     </div>
   </section>
 
   <footer class="foot">
     <div class="wrap foot-in">
-      <span>Carnet de commandes · pour boulangers-pâtissiers</span>
-      <a href="tel:+33610601442">06 10 60 14 42</a>
+      <a class="foot-mark" href="index.html">
+        <img src="assets/logo-carnet.svg?v=6" alt="Carnet">
+      </a>
+      <a class="foot-legal" href="mentions-legales.html">Mentions légales</a>
     </div>
   </footer>
   <script>
@@ -217,5 +300,8 @@
       if (img) img.src = src;
     })();
   </script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script src="email-config.js"></script>
+  <script src="contact.js?v=2"></script>
 </body>
 </html>

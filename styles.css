@@ -1282,14 +1282,35 @@ a {
   background: var(--bg);
   color: var(--muted);
   font-size: 14px;
-  padding: 22px 0;
+  padding: 64px 0 48px;
 }
 
 .foot-in {
   display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  text-align: center;
+}
+
+.foot-mark {
+  display: block;
+  line-height: 0;
+}
+
+.foot-mark img {
+  width: 72px;
+  height: 72px;
+}
+
+.foot-legal {
+  color: var(--muted);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.foot-legal:hover {
+  color: var(--accent);
 }
 
 .test-page .nav a,
@@ -2813,6 +2834,7 @@ body.home .btn-main {
 #catalogue,
 #demo,
 #tarif,
+#faq,
 #contact {
   scroll-margin-top: 80px;
 }
@@ -3182,31 +3204,208 @@ body.home .home-band .product-grid {
   color: var(--muted);
 }
 
+.home-faq {
+  max-width: 40rem;
+}
+
+body.home .faq summary {
+  font-family: var(--serif);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  font-size: 1.125rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  list-style: none;
+}
+
+body.home .faq summary::-webkit-details-marker {
+  display: none;
+}
+
+body.home .faq summary::after {
+  content: "+";
+  flex: none;
+  font-family: var(--serif);
+  font-weight: 500;
+  color: var(--accent);
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+body.home .faq details[open] summary::after {
+  content: "–";
+}
+
 .home-contact {
-  text-align: center;
+  text-align: left;
+}
+
+.home-contact-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 22rem);
+  gap: 48px 56px;
+  align-items: start;
 }
 
 .home-contact .section-title {
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0 0 22px;
+  max-width: 12ch;
 }
 
-.home-contact .intro {
-  margin-left: auto;
-  margin-right: auto;
+.home-contact-text p {
+  margin: 0 0 18px;
+  max-width: 38rem;
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--muted);
 }
 
-.home-contact .btn {
-  min-width: 220px;
+.home-contact-text p:last-child {
+  margin-bottom: 0;
 }
 
-body.home .foot a {
+.home-lead {
+  width: 100%;
+  margin: 0;
+  padding: 32px 28px;
+  text-align: left;
+  position: relative;
+}
+
+.home-lead .field {
+  margin: 0 0 14px;
+}
+
+.home-lead label {
+  display: block;
+  margin: 0 0 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.home-lead .optional {
+  font-weight: 400;
+}
+
+.home-lead input,
+.home-lead textarea {
+  width: 100%;
+  border: 1.5px solid var(--line);
+  border-radius: 12px;
+  padding: 13px 14px;
+  font: inherit;
+  font-size: 16px;
+  background: var(--bg);
+  color: var(--ink);
+}
+
+.home-lead textarea {
+  min-height: 7.5rem;
+  resize: vertical;
+}
+
+.home-lead input:focus,
+.home-lead textarea:focus {
+  outline: 2px solid var(--secondary);
+  border-color: var(--accent);
+}
+
+.home-lead input.is-bad {
+  border-color: var(--accent);
+}
+
+.home-lead .field-error {
+  color: var(--accent);
+}
+
+.home-lead .btn {
+  width: 100%;
+  margin-top: 18px;
+}
+
+.home-lead .btn:disabled {
+  opacity: 0.7;
+  cursor: wait;
+}
+
+.home-lead-status {
+  margin: 12px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.home-lead-title {
+  margin: 0 0 10px;
+  font-family: var(--serif);
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.home-lead-ok p:last-child {
+  margin: 0;
+  color: var(--muted);
+}
+
+.hp {
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+body.home .foot a,
+body.legal .foot a {
   color: var(--muted);
   text-decoration: none;
 }
 
-body.home .foot a:hover {
+body.home .foot a:hover,
+body.legal .foot a:hover {
   color: var(--accent);
+}
+
+.legal-sheet {
+  max-width: 40rem;
+}
+
+.legal-sheet h1 {
+  font-family: var(--serif);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  margin: 0 0 32px;
+}
+
+body.legal .legal-sheet h2 {
+  font-family: var(--serif);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  font-size: 1.25rem;
+  line-height: 1.3;
+  max-width: none;
+  margin: 28px 0 10px;
+}
+
+.legal-sheet p {
+  margin: 0 0 8px;
+  color: var(--ink);
+}
+
+.legal-sheet a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.legal-sheet a:hover {
+  text-decoration: underline;
 }
 
 @media (max-width: 860px) {
@@ -3219,6 +3418,7 @@ body.home .foot a:hover {
   body.home .home-steps,
   body.home .home-demo,
   body.home .home-tarif,
+  body.home .home-contact-grid,
   body.home .home-band .product-grid {
     grid-template-columns: 1fr;
   }

@@ -23,6 +23,8 @@
     ".home-demo",
     ".home-aside",
     ".home-price",
+    ".home-contact-copy",
+    ".legal-sheet",
     ".home-quote",
     ".center-link",
     ".plan-promise",
