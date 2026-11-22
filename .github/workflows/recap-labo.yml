@@ -3,17 +3,23 @@ name: Recap labo
 on:
   schedule:
     - cron: "5 * * * *"
+    - cron: "35 12,13,14,15,16,17 * * *"
   workflow_dispatch:
+
+concurrency:
+  group: recap-labo
+  cancel-in-progress: false
 
 jobs:
   send:
     runs-on: ubuntu-latest
+    timeout-minutes: 360
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: "20"
-      - name: Envoyer le récap si l’heure de Paris est passée
+          node-version: "22"
+      - name: Envoyer le récap à l’heure de Paris
         run: node scripts/send-recap.mjs
         env:
           EMAILJS_PRIVATE_KEY: ${{ secrets.EMAILJS_PRIVATE_KEY }}

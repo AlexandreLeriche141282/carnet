@@ -46,17 +46,26 @@ function updateAutoMailNote() {
     return;
   }
   if (recapAlreadySentToday()) {
-    el.innerHTML = `Le récap automatique du jour est déjà parti, à ${hour}.<br>Prochain envoi : demain, à ${hour}, même si cet onglet est fermé.`;
+    el.innerHTML = `Le récap automatique du jour est déjà parti, à ${hour}.<br>Prochain envoi : demain, à ${hour}, sans ouvrir cette page.`;
     return;
   }
-  el.innerHTML = `Un seul mail automatique par jour, à ${hour}, même si cet onglet est fermé.<br>Il part pour les retraits du lendemain.`;
+  el.innerHTML = `Un seul mail automatique par jour, à ${hour}.<br>Il part tout seul, sans ouvrir cette page, pour les retraits du lendemain.`;
 }
 
 async function tryAutoSendRecap() {
-  if (autoSendBusy || !patronUnlocked() || !shouldAutoSendRecap()) return;
-  autoSendBusy = true;
+  if (autoSendBusy || !patronUnlocked() || !emailjsReady()) return;
+  if (recapAlreadySentToday()) return;
   const settings = loadMailSettings();
+  if (!isEmailOk(settings.to) || isPlaceholderMail(settings.to)) return;
+  const now = new Date();
+  if (now.getHours() * 60 + now.getMinutes() < hourLabelToMinutes(settings.hour)) return;
+  autoSendBusy = true;
   try {
+    await hydrateFromRemote();
+    if (!shouldAutoSendRecap()) {
+      updateAutoMailNote();
+      return;
+    }
     const mail = pushRecapMail(tomorrowIso(), settings.to);
     await sendLabEmail(mail);
     markRecapSentToday();

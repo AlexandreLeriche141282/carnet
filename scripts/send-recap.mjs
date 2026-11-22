@@ -111,6 +111,17 @@ function hourLabelToMinutes(hour) {
   return Number.isFinite(n) ? n * 60 : 18 * 60;
 }
 
+function padTime(n) {
+  return String(n).padStart(2, "0");
+}
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+const STORE_UA = "carnet-recap/1.0 (+https://github.com/AlexandreLeriche141282/carnet)";
+const MAX_WAIT_MS = (5 * 60 + 20) * 60 * 1000;
+
 function isEmailOk(value) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((value || "").trim());
 }
@@ -142,14 +153,21 @@ function recapPayload(orders, when, to, hour) {
 }
 
 async function pullState(cfg) {
-  const res = await fetch(cfg.storeUrl, { cache: "no-store" });
+  const res = await fetch(cfg.storeUrl, {
+    cache: "no-store",
+    headers: { Accept: "application/json", "User-Agent": STORE_UA },
+  });
   if (!res.ok) throw new Error(`store GET ${res.status}`);
   const data = await res.json();
   return data && typeof data === "object" ? data : {};
 }
 
 async function pushState(cfg, state) {
-  const headers = { "Content-Type": "application/json" };
+  const headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    "User-Agent": STORE_UA,
+  };
   if (cfg.storeKey) headers["X-Bin-Key"] = cfg.storeKey;
   const res = await fetch(cfg.storeUrl, {
     method: "PUT",
@@ -157,6 +175,33 @@ async function pushState(cfg, state) {
     body: JSON.stringify(state),
   });
   if (!res.ok) throw new Error(`store PUT ${res.status}`);
+}
+
+async function waitForLabHour(cfg) {
+  for (;;) {
+    const now = parisNow();
+    const state = await pullState(cfg);
+    const orders = Array.isArray(state.orders) ? state.orders : [];
+    const mailSet = state.mail && typeof state.mail === "object" ? state.mail : {};
+    const hour = mailSet.hour || "18h";
+    const to = isEmailOk(mailSet.to) && !isPlaceholderMail(mailSet.to) ? mailSet.to.trim() : "alexandre@pikcel.fr";
+    if (state.recapSentOn === now.date) {
+      console.log(`Déjà envoyé aujourd’hui (${now.date}).`);
+      process.exit(0);
+    }
+    const nowMin = now.hour * 60 + now.minute;
+    const targetMin = hourLabelToMinutes(hour);
+    if (nowMin >= targetMin) return { now, state, orders, hour, to };
+    const remainMs = (targetMin - nowMin) * 60 * 1000;
+    if (remainMs > MAX_WAIT_MS) {
+      console.log(`Trop tôt à Paris (${padTime(now.hour)}:${padTime(now.minute)}, cible ${hour}).`);
+      process.exit(0);
+    }
+    console.log(
+      `Attente jusqu’à ${hour} (Paris ${padTime(now.hour)}:${padTime(now.minute)}, encore ${Math.ceil(remainMs / 60000)} min).`
+    );
+    await sleep(Math.min(60_000, remainMs));
+  }
 }
 
 async function sendEmail(cfg, mail) {
@@ -193,24 +238,7 @@ if (!cfg.publicKey || !cfg.serviceId || !cfg.templateId) {
   process.exit(0);
 }
 
-const now = parisNow();
-const state = await pullState(cfg);
-const orders = Array.isArray(state.orders) ? state.orders : [];
-const mailSet = state.mail && typeof state.mail === "object" ? state.mail : {};
-const hour = mailSet.hour || "18h";
-const to = isEmailOk(mailSet.to) && !isPlaceholderMail(mailSet.to) ? mailSet.to.trim() : "alexandre@pikcel.fr";
-const nowMin = now.hour * 60 + now.minute;
-
-if (state.recapSentOn === now.date) {
-  console.log(`Déjà envoyé aujourd’hui (${now.date}).`);
-  process.exit(0);
-}
-
-if (nowMin < hourLabelToMinutes(hour)) {
-  console.log(`Trop tôt à Paris (${String(now.hour).padStart(2, "0")}:${String(now.minute).padStart(2, "0")}, cible ${hour}).`);
-  process.exit(0);
-}
-
+const { now, state, orders, hour, to } = await waitForLabHour(cfg);
 const mail = recapPayload(orders, addDaysIso(now.date, 1), to, hour);
 await sendEmail(cfg, mail);
 await pushState(cfg, { ...state, orders, mail: { to, hour }, recapSentOn: now.date });
