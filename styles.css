@@ -381,6 +381,7 @@ a {
   .hero-pro .device-wrap,
   .home-hero .eyebrow,
   .home-hero h1,
+  .home-hero .hero-pitch,
   .home-hero .lead,
   .home-hero .cta-row,
   .home-stats,
@@ -2865,6 +2866,14 @@ body.home .btn-main {
   color: var(--accent);
 }
 
+.home-hero .hero-pitch {
+  margin: 18px 0 0;
+  max-width: 34rem;
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
 .home-hero .lead {
   margin: 22px 0 28px;
   padding: 0;
@@ -2904,6 +2913,10 @@ body.home .btn-main {
 
 .home-hero h1 {
   animation: intro-rise 0.78s cubic-bezier(0.22, 1, 0.36, 1) 0.14s both;
+}
+
+.home-hero .hero-pitch {
+  animation: intro-rise 0.78s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
 }
 
 .home-hero .lead {
