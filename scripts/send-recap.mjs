@@ -120,7 +120,10 @@ function sleep(ms) {
 }
 
 const STORE_UA = "carnet-recap/1.0 (+https://github.com/AlexandreLeriche141282/carnet)";
-const MAX_WAIT_MS = (5 * 60 + 20) * 60 * 1000;
+const JOB_MAX_MS = (5 * 60 + 50) * 60 * 1000;
+const JOB_BUFFER_MS = 2 * 60 * 1000;
+const SEND_EARLY_MS = 40 * 60 * 1000;
+const jobDeadline = Date.now() + JOB_MAX_MS;
 
 function isEmailOk(value) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((value || "").trim());
@@ -177,30 +180,75 @@ async function pushState(cfg, state) {
   if (!res.ok) throw new Error(`store PUT ${res.status}`);
 }
 
+async function redispatchWorkflow() {
+  const repo = process.env.GITHUB_REPOSITORY || "";
+  const token = process.env.GITHUB_TOKEN || "";
+  const ref = process.env.GITHUB_REF_NAME || "main";
+  if (!repo || !token) return false;
+  const res = await fetch(`https://api.github.com/repos/${repo}/actions/workflows/recap-labo.yml/dispatches`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: "application/vnd.github+json",
+      "X-GitHub-Api-Version": "2022-11-28",
+    },
+    body: JSON.stringify({ ref }),
+  });
+  if (!res.ok) {
+    const text = await res.text();
+    console.log(`Relance GitHub refusée (${res.status} ${text.slice(0, 180)}).`);
+    return false;
+  }
+  console.log("Job relancé pour attendre l’heure du labo.");
+  return true;
+}
+
+function snapshotFromState(state, now) {
+  const orders = Array.isArray(state.orders) ? state.orders : [];
+  const mailSet = state.mail && typeof state.mail === "object" ? state.mail : {};
+  const hour = mailSet.hour || "18h";
+  const to = isEmailOk(mailSet.to) && !isPlaceholderMail(mailSet.to) ? mailSet.to.trim() : "alexandre@pikcel.fr";
+  return { now, state, orders, hour, to };
+}
+
 async function waitForLabHour(cfg) {
   for (;;) {
     const now = parisNow();
     const state = await pullState(cfg);
-    const orders = Array.isArray(state.orders) ? state.orders : [];
-    const mailSet = state.mail && typeof state.mail === "object" ? state.mail : {};
-    const hour = mailSet.hour || "18h";
-    const to = isEmailOk(mailSet.to) && !isPlaceholderMail(mailSet.to) ? mailSet.to.trim() : "alexandre@pikcel.fr";
+    const snap = snapshotFromState(state, now);
     if (state.recapSentOn === now.date) {
       console.log(`Déjà envoyé aujourd’hui (${now.date}).`);
       process.exit(0);
     }
     const nowMin = now.hour * 60 + now.minute;
-    const targetMin = hourLabelToMinutes(hour);
-    if (nowMin >= targetMin) return { now, state, orders, hour, to };
+    const targetMin = hourLabelToMinutes(snap.hour);
+    if (nowMin >= targetMin) return snap;
+
     const remainMs = (targetMin - nowMin) * 60 * 1000;
-    if (remainMs > MAX_WAIT_MS) {
-      console.log(`Trop tôt à Paris (${padTime(now.hour)}:${padTime(now.minute)}, cible ${hour}).`);
-      process.exit(0);
+    const timeLeft = jobDeadline - Date.now();
+    const clock = `Paris ${padTime(now.hour)}:${padTime(now.minute)}, cible ${snap.hour}, encore ${Math.ceil(remainMs / 60000)} min`;
+
+    if (remainMs + JOB_BUFFER_MS <= timeLeft) {
+      console.log(`Attente jusqu’à ${snap.hour} (${clock}).`);
+      await sleep(Math.min(60_000, remainMs));
+      continue;
     }
-    console.log(
-      `Attente jusqu’à ${hour} (Paris ${padTime(now.hour)}:${padTime(now.minute)}, encore ${Math.ceil(remainMs / 60000)} min).`
-    );
-    await sleep(Math.min(60_000, remainMs));
+
+    if (timeLeft > JOB_BUFFER_MS) {
+      console.log(`Attente jusqu’à la limite du job (${clock}).`);
+      await sleep(Math.min(60_000, Math.max(5_000, timeLeft - JOB_BUFFER_MS)));
+      continue;
+    }
+
+    if (remainMs <= SEND_EARLY_MS) {
+      console.log(`Plus que ${Math.ceil(remainMs / 60000)} min avant ${snap.hour} : envoi maintenant.`);
+      return snapshotFromState(state, parisNow());
+    }
+
+    if (await redispatchWorkflow()) process.exit(0);
+
+    console.log(`Trop tôt à Paris (${padTime(now.hour)}:${padTime(now.minute)}, cible ${snap.hour}). Relance impossible.`);
+    process.exit(0);
   }
 }
 

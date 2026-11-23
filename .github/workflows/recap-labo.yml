@@ -10,6 +10,10 @@ concurrency:
   group: recap-labo
   cancel-in-progress: false
 
+permissions:
+  contents: read
+  actions: write
+
 jobs:
   send:
     runs-on: ubuntu-latest
@@ -23,3 +27,4 @@ jobs:
         run: node scripts/send-recap.mjs
         env:
           EMAILJS_PRIVATE_KEY: ${{ secrets.EMAILJS_PRIVATE_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
