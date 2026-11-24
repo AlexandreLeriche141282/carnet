@@ -462,7 +462,7 @@ function pushOrderMail(order) {
   addMail({
     type: "order",
     to: loadMailSettings().to,
-    from: "Carnet de commandes <commandes@carnet.fr>",
+    from: "Carnet <commandes@aveccarnet.fr>",
     subject: `Commande : ${order.name} — ${items.length} produit${items.length > 1 ? "s" : ""}`,
     preview: `Retrait ${pickupLabel(order)} · ${euro(orderTotal(order))} au comptoir`,
     body: [
@@ -543,7 +543,7 @@ function pushRecapMail(date, to) {
   addMail({
     type: "recap",
     to: mail.to,
-    from: "Carnet de commandes <commandes@carnet.fr>",
+    from: "Carnet <commandes@aveccarnet.fr>",
     subject: mail.subject,
     preview: mail.preview,
     body: mail.body,
