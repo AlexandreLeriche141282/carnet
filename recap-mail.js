@@ -37,15 +37,6 @@
     return [{ product: order.product, size: order.size, flavor: order.flavor, price: order.price, qty: 1 }];
   }
 
-  function itemLabel(item) {
-    const qty = itemQty(item) > 1 ? ` × ${itemQty(item)}` : "";
-    return [item.product, item.size ? `${item.size} personnes` : "", item.flavor].filter(Boolean).join(" · ") + qty;
-  }
-
-  function orderLabel(order) {
-    return orderItems(order).map(itemLabel).join(" + ");
-  }
-
   function orderTotal(order) {
     if (typeof order.price === "number") return order.price;
     return orderItems(order).reduce((sum, item) => sum + (Number(item.price) || 0) * itemQty(item), 0);
@@ -78,7 +69,12 @@
   function counterRows(orders) {
     return orders.map((order) => ({
       name: order.name || "—",
-      detail: orderLabel(order),
+      items: orderItems(order).map((item) => ({
+        product: item.product || "—",
+        size: sizeLabel(item.size),
+        flavor: item.flavor || "—",
+        qty: itemQty(item),
+      })),
       time: order.time || "—",
       amount: euro(orderTotal(order)),
     }));
@@ -103,7 +99,15 @@
       ? data.lines.map((line) => `${line.product} · ${line.size} · ${line.flavor} × ${line.qty}`)
       : ["(aucune commande)"];
     const rows = data.rows.length
-      ? data.rows.map((row) => `${row.name} · ${row.detail} · ${row.time} · ${row.amount}`)
+      ? data.rows.flatMap((row) => [
+          `${row.name} · ${row.time} · ${row.amount}`,
+          ...(row.items.length
+            ? row.items.map((item) => {
+                const qty = item.qty > 1 ? ` × ${item.qty}` : "";
+                return `  ${item.product}${qty} · ${item.size} · ${item.flavor}`;
+              })
+            : ["  (aucun produit)"]),
+        ])
       : ["(aucun retrait)"];
     return [
       data.shopName,
@@ -149,16 +153,33 @@
 
     const counter = data.rows.length
       ? data.rows
-          .map(
-            (row) => `<tr>
-              ${td(escapeHtml(row.name), "left", "font-weight:600;white-space:nowrap;")}
-              ${td(escapeHtml(row.detail), "left")}
-              ${td(escapeHtml(row.time), "left", `white-space:nowrap;`)}
-              ${td(escapeHtml(row.amount), "right", `white-space:nowrap;font-family:${SERIF};`)}
-            </tr>`,
-          )
+          .map((row, index) => {
+            const items = row.items.length
+              ? row.items
+                  .map((item) => {
+                    const qty = item.qty > 1 ? ` × ${item.qty}` : "";
+                    return `<tr>
+                      ${td(escapeHtml(item.product) + escapeHtml(qty), "left", "font-weight:600;")}
+                      ${td(escapeHtml(item.size), "left", `color:${MUTED};`)}
+                      ${td(escapeHtml(item.flavor), "left")}
+                    </tr>`;
+                  })
+                  .join("")
+              : emptyRow(3, "Aucun produit.");
+            const spacer =
+              index < data.rows.length - 1
+                ? `<table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td height="12" style="height:12px;line-height:12px;font-size:0;">&nbsp;</td></tr></table>`
+                : "";
+            return `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border:1px solid ${LINE};border-collapse:collapse;">
+              <tr style="background:${CRUST};">
+                <td style="padding:11px 14px;font-family:${SANS};font-size:15px;font-weight:600;color:${CRUST_FG};white-space:nowrap;">${escapeHtml(row.name)}</td>
+                <td align="right" colspan="2" style="padding:11px 14px;font-family:${SANS};font-size:13px;color:${CRUST_FG};white-space:nowrap;">${escapeHtml(row.time)} · <span style="font-family:${SERIF};font-size:16px;">${escapeHtml(row.amount)}</span></td>
+              </tr>
+              ${items}
+            </table>${spacer}`;
+          })
           .join("")
-      : emptyRow(4, "Aucun retrait.");
+      : `<table width="100%" cellpadding="0" cellspacing="0">${emptyRow(1, "Aucun retrait.")}</table>`;
 
     const countLabel = `${data.count} commande${data.count === 1 ? "" : "s"}`;
 
@@ -211,15 +232,8 @@
                   <td style="padding:12px 16px;font-family:${SERIF};font-size:18px;color:${INK};">Retraits au comptoir</td>
                 </tr>
               </table>
-              <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
-                <tr style="background:${CRUST};">
-                  ${th("Client", "left")}
-                  ${th("Commande", "left")}
-                  ${th("Heure", "left")}
-                  ${th("Montant", "right")}
-                </tr>
-                ${counter}
-              </table>
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td height="8" style="height:8px;line-height:8px;font-size:0;">&nbsp;</td></tr></table>
+              ${counter}
             </td>
           </tr>
           <tr>
