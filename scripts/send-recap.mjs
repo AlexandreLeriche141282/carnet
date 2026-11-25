@@ -8,6 +8,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 function loadFrontConfig() {
   const ctx = { window: {} };
   vm.runInNewContext(fs.readFileSync(path.join(root, "email-config.js"), "utf8"), ctx);
+  vm.runInNewContext(fs.readFileSync(path.join(root, "recap-mail.js"), "utf8"), ctx);
   const emailjs = ctx.window.CARNET_EMAILJS || {};
   const store = ctx.window.CARNET_STORE || {};
   return {
@@ -17,6 +18,7 @@ function loadFrontConfig() {
     privateKey: (process.env.EMAILJS_PRIVATE_KEY || "").trim(),
     storeUrl: (process.env.CARNET_STORE_URL || store.url || "").trim(),
     storeKey: (process.env.CARNET_STORE_KEY || store.key || "").trim(),
+    recapMail: ctx.window.CARNET_RECAP_MAIL,
   };
 }
 
@@ -120,10 +122,7 @@ function sleep(ms) {
 }
 
 const STORE_UA = "carnet-recap/1.0 (+https://github.com/AlexandreLeriche141282/carnet)";
-const JOB_MAX_MS = (5 * 60 + 50) * 60 * 1000;
-const JOB_BUFFER_MS = 2 * 60 * 1000;
-const SEND_EARLY_MS = 40 * 60 * 1000;
-const jobDeadline = Date.now() + JOB_MAX_MS;
+const MAX_WAIT_MS = 20 * 60 * 1000;
 
 function isEmailOk(value) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((value || "").trim());
@@ -134,10 +133,11 @@ function isPlaceholderMail(value) {
   return to.endsWith("@leonardd.fr") || to.endsWith("@example.com") || to.endsWith("@carnet.fr");
 }
 
-function recapPayload(orders, when, to, hour) {
+function recapPayload(orders, when, to, hour, recapMail) {
   const dayOrders = orders.filter((order) => orderDate(order) === when);
-  const subject = `${formatDateFr(when)} — ${dayOrders.length} commande${dayOrders.length > 1 ? "s" : ""} à produire`;
-  const body = [
+  const built = recapMail?.build(dayOrders, { whenLabel: formatDateFr(when), hour });
+  const subject = built?.subject || `${formatDateFr(when)} — ${dayOrders.length} commande${dayOrders.length > 1 ? "s" : ""} à produire`;
+  const body = built?.text || [
     `Bonjour,`,
     ``,
     `Récap labo · envoi ${hour}`,
@@ -152,14 +152,39 @@ function recapPayload(orders, when, to, hour) {
     ``,
     `Ouvrez la feuille du labo pour imprimer ou cocher les retraits.`,
   ].join("\n");
-  return { to, subject, body, date: when, count: dayOrders.length };
+  return { to, subject, body, html: built?.html || "", date: when, count: dayOrders.length };
+}
+
+async function withRetry(fn, { tries = 5, label, waitMs = 2500 } = {}) {
+  let last;
+  for (let i = 1; i <= tries; i += 1) {
+    try {
+      return await fn();
+    } catch (err) {
+      last = err;
+      const detail = err.cause?.message || err.message;
+      console.log(`${label} : essai ${i}/${tries} échoué (${detail}).`);
+      if (i < tries) await sleep(waitMs * i);
+    }
+  }
+  throw last;
+}
+
+function fetchOpts(extra = {}) {
+  return {
+    cache: "no-store",
+    signal: AbortSignal.timeout(20_000),
+    ...extra,
+  };
 }
 
 async function pullState(cfg) {
-  const res = await fetch(cfg.storeUrl, {
-    cache: "no-store",
-    headers: { Accept: "application/json", "User-Agent": STORE_UA },
-  });
+  const res = await fetch(
+    cfg.storeUrl,
+    fetchOpts({
+      headers: { Accept: "application/json", "User-Agent": STORE_UA },
+    }),
+  );
   if (!res.ok) throw new Error(`store GET ${res.status}`);
   const data = await res.json();
   return data && typeof data === "object" ? data : {};
@@ -172,35 +197,15 @@ async function pushState(cfg, state) {
     "User-Agent": STORE_UA,
   };
   if (cfg.storeKey) headers["X-Bin-Key"] = cfg.storeKey;
-  const res = await fetch(cfg.storeUrl, {
-    method: "PUT",
-    headers,
-    body: JSON.stringify(state),
-  });
+  const res = await fetch(
+    cfg.storeUrl,
+    fetchOpts({
+      method: "PUT",
+      headers,
+      body: JSON.stringify(state),
+    }),
+  );
   if (!res.ok) throw new Error(`store PUT ${res.status}`);
-}
-
-async function redispatchWorkflow() {
-  const repo = process.env.GITHUB_REPOSITORY || "";
-  const token = process.env.GITHUB_TOKEN || "";
-  const ref = process.env.GITHUB_REF_NAME || "main";
-  if (!repo || !token) return false;
-  const res = await fetch(`https://api.github.com/repos/${repo}/actions/workflows/recap-labo.yml/dispatches`, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: "application/vnd.github+json",
-      "X-GitHub-Api-Version": "2022-11-28",
-    },
-    body: JSON.stringify({ ref }),
-  });
-  if (!res.ok) {
-    const text = await res.text();
-    console.log(`Relance GitHub refusée (${res.status} ${text.slice(0, 180)}).`);
-    return false;
-  }
-  console.log("Job relancé pour attendre l’heure du labo.");
-  return true;
 }
 
 function snapshotFromState(state, now) {
@@ -212,44 +217,34 @@ function snapshotFromState(state, now) {
 }
 
 async function waitForLabHour(cfg) {
-  for (;;) {
-    const now = parisNow();
-    const state = await pullState(cfg);
-    const snap = snapshotFromState(state, now);
-    if (state.recapSentOn === now.date) {
-      console.log(`Déjà envoyé aujourd’hui (${now.date}).`);
-      process.exit(0);
-    }
-    const nowMin = now.hour * 60 + now.minute;
-    const targetMin = hourLabelToMinutes(snap.hour);
-    if (nowMin >= targetMin) return snap;
-
-    const remainMs = (targetMin - nowMin) * 60 * 1000;
-    const timeLeft = jobDeadline - Date.now();
-    const clock = `Paris ${padTime(now.hour)}:${padTime(now.minute)}, cible ${snap.hour}, encore ${Math.ceil(remainMs / 60000)} min`;
-
-    if (remainMs + JOB_BUFFER_MS <= timeLeft) {
-      console.log(`Attente jusqu’à ${snap.hour} (${clock}).`);
-      await sleep(Math.min(60_000, remainMs));
-      continue;
-    }
-
-    if (timeLeft > JOB_BUFFER_MS) {
-      console.log(`Attente jusqu’à la limite du job (${clock}).`);
-      await sleep(Math.min(60_000, Math.max(5_000, timeLeft - JOB_BUFFER_MS)));
-      continue;
-    }
-
-    if (remainMs <= SEND_EARLY_MS) {
-      console.log(`Plus que ${Math.ceil(remainMs / 60000)} min avant ${snap.hour} : envoi maintenant.`);
-      return snapshotFromState(state, parisNow());
-    }
-
-    if (await redispatchWorkflow()) process.exit(0);
-
-    console.log(`Trop tôt à Paris (${padTime(now.hour)}:${padTime(now.minute)}, cible ${snap.hour}). Relance impossible.`);
+  const state = await withRetry(() => pullState(cfg), { label: "Lecture commandes" });
+  const now = parisNow();
+  const snap = snapshotFromState(state, now);
+  if (state.recapSentOn === now.date) {
+    console.log(`Déjà envoyé aujourd’hui (${now.date}).`);
     process.exit(0);
   }
+  const nowMin = now.hour * 60 + now.minute;
+  const targetMin = hourLabelToMinutes(snap.hour);
+  if (nowMin >= targetMin) return snap;
+
+  const remainMs = (targetMin - nowMin) * 60 * 1000;
+  if (remainMs > MAX_WAIT_MS) {
+    console.log(
+      `Trop tôt à Paris (${padTime(now.hour)}:${padTime(now.minute)}, cible ${snap.hour}). Prochain créneau GitHub.`,
+    );
+    process.exit(0);
+  }
+
+  console.log(`Attente ${Math.ceil(remainMs / 60000)} min jusqu’à ${snap.hour}.`);
+  await sleep(remainMs + 2000);
+  const later = parisNow();
+  const fresh = await withRetry(() => pullState(cfg), { label: "Lecture commandes" });
+  if (fresh.recapSentOn === later.date) {
+    console.log(`Déjà envoyé aujourd’hui (${later.date}).`);
+    process.exit(0);
+  }
+  return snapshotFromState(fresh, later);
 }
 
 async function sendEmail(cfg, mail) {
@@ -261,17 +256,21 @@ async function sendEmail(cfg, mail) {
       to_email: mail.to,
       subject: mail.subject,
       message: mail.body,
+      html_message: mail.html || mail.body,
     },
   };
   if (cfg.privateKey) payload.accessToken = cfg.privateKey;
-  const res = await fetch("https://api.emailjs.com/api/v1.0/email/send", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Origin: "https://alexandreleriche141282.github.io",
-    },
-    body: JSON.stringify(payload),
-  });
+  const res = await fetch(
+    "https://api.emailjs.com/api/v1.0/email/send",
+    fetchOpts({
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Origin: "https://alexandreleriche141282.github.io",
+      },
+      body: JSON.stringify(payload),
+    }),
+  );
   const text = await res.text();
   if (!res.ok) throw new Error(`emailjs ${res.status} ${text.slice(0, 240)}`);
 }
@@ -286,8 +285,17 @@ if (!cfg.publicKey || !cfg.serviceId || !cfg.templateId) {
   process.exit(0);
 }
 
-const { now, state, orders, hour, to } = await waitForLabHour(cfg);
-const mail = recapPayload(orders, addDaysIso(now.date, 1), to, hour);
-await sendEmail(cfg, mail);
-await pushState(cfg, { ...state, orders, mail: { to, hour }, recapSentOn: now.date });
-console.log(`Récap parti vers ${to} pour ${mail.date} (${mail.count} commande${mail.count > 1 ? "s" : ""}).`);
+try {
+  const { now, state, orders, hour, to } = await waitForLabHour(cfg);
+  const mail = recapPayload(orders, addDaysIso(now.date, 1), to, hour, cfg.recapMail);
+  await withRetry(() => sendEmail(cfg, mail), { label: "EmailJS", tries: 4 });
+  await withRetry(
+    () => pushState(cfg, { ...state, orders, mail: { to, hour }, recapSentOn: now.date }),
+    { label: "Marque envoyé" },
+  );
+  console.log(`Récap parti vers ${to} pour ${mail.date} (${mail.count} commande${mail.count > 1 ? "s" : ""}).`);
+} catch (err) {
+  const detail = err.cause?.message || err.message;
+  console.log(`Échec récap : ${detail}`);
+  process.exit(1);
+}

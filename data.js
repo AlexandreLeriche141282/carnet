@@ -512,8 +512,12 @@ function recapPayload(date, to) {
   const dest = isEmailOk(to) ? to.trim() : loadMailSettings().to;
   const hour = loadMailSettings().hour;
   const orders = ordersForDay(when);
-  const subject = `${formatDateFr(when)} — ${orders.length} commande${orders.length > 1 ? "s" : ""} à produire`;
-  const body = [
+  const built =
+    window.CARNET_RECAP_MAIL && typeof window.CARNET_RECAP_MAIL.build === "function"
+      ? window.CARNET_RECAP_MAIL.build(orders, { whenLabel: formatDateFr(when), hour })
+      : null;
+  const subject = built?.subject || `${formatDateFr(when)} — ${orders.length} commande${orders.length > 1 ? "s" : ""} à produire`;
+  const body = built?.text || [
     `Bonjour,`,
     ``,
     `Récap labo · envoi ${hour}`,
@@ -533,6 +537,7 @@ function recapPayload(date, to) {
     subject,
     preview: `Retrait ${formatDateFr(when)} · ${orders.length} commande${orders.length > 1 ? "s" : ""}`,
     body,
+    html: built?.html || "",
     orders,
     date: when,
   };
@@ -626,6 +631,7 @@ async function sendLabEmail(mail) {
     to_email: mail.to,
     subject: mail.subject,
     message: mail.body,
+    html_message: mail.html || mail.body,
   });
 }
 

@@ -126,10 +126,15 @@
         window.emailjs.init({ publicKey: cfg.publicKey });
         window.__carnetEmailjsInit = true;
       }
+      const html = `<pre style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.5;white-space:pre-wrap;">${body
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")}</pre>`;
       await window.emailjs.send(cfg.serviceId, cfg.templateId, {
         to_email: TO,
         subject: `Essai Carnet — ${shop} — ${name}`,
         message: body,
+        html_message: html,
       });
       markSent();
       showThanks();

@@ -2,8 +2,10 @@ name: Recap labo
 
 on:
   schedule:
-    - cron: "5 * * * *"
-    - cron: "35 12,13,14,15,16,17 * * *"
+    # Toutes les heures, si l’heure du labo n’est pas 18 h.
+    - cron: "10 * * * *"
+    # 18 h Paris = 17 h UTC en hiver, 16 h UTC en été.
+    - cron: "0,20,40 16,17,18 * * *"
   workflow_dispatch:
 
 concurrency:
@@ -12,12 +14,11 @@ concurrency:
 
 permissions:
   contents: read
-  actions: write
 
 jobs:
   send:
     runs-on: ubuntu-latest
-    timeout-minutes: 360
+    timeout-minutes: 35
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -27,4 +28,3 @@ jobs:
         run: node scripts/send-recap.mjs
         env:
           EMAILJS_PRIVATE_KEY: ${{ secrets.EMAILJS_PRIVATE_KEY }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
